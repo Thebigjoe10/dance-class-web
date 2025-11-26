@@ -1,0 +1,487 @@
+{
+  "info": {
+    "name": "Dance School API",
+    "description": "Complete API collection for Dance School Platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000/api",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student@example.com\",\n  \"password\": \"SecurePass123\",\n  \"name\": \"John Doe\",\n  \"phone\": \"+2348012345678\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"student@example.com\",\n  \"password\": \"SecurePass123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/auth/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "me"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Events",
+      "item": [
+        {
+          "name": "Get All Events",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/events?upcoming=true",
+              "host": ["{{baseUrl}}"],
+              "path": ["events"],
+              "query": [
+                {
+                  "key": "upcoming",
+                  "value": "true"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Event by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/events/:eventId",
+              "host": ["{{baseUrl}}"],
+              "path": ["events", ":eventId"],
+              "variable": [
+                {
+                  "key": "eventId",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Checkout (Guest)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"buyerName\": \"Jane Smith\",\n  \"buyerEmail\": \"jane@example.com\",\n  \"buyerPhone\": \"+2348087654321\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/events/:eventId/checkout",
+              "host": ["{{baseUrl}}"],
+              "path": ["events", ":eventId", "checkout"],
+              "variable": [
+                {
+                  "key": "eventId",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Event (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Annual Dance Showcase\",\n  \"description\": \"End of year performance\",\n  \"date\": \"2024-12-20\",\n  \"time\": \"18:00\",\n  \"venue\": \"Grand Theater\",\n  \"capacity\": 200,\n  \"price\": 5000,\n  \"imageUrl\": \"https://example.com/image.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/events",
+              "host": ["{{baseUrl}}"],
+              "path": ["events"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tickets",
+      "item": [
+        {
+          "name": "Get Ticket",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tickets/:ticketId",
+              "host": ["{{baseUrl}}"],
+              "path": ["tickets", ":ticketId"],
+              "variable": [
+                {
+                  "key": "ticketId",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Verify Ticket (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"qrPayload\": \"base64-encoded-qr-payload\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tickets/verify",
+              "host": ["{{baseUrl}}"],
+              "path": ["tickets", "verify"]
+            }
+          }
+        },
+        {
+          "name": "Mark Ticket as Used (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tickets/:ticketId/use",
+              "host": ["{{baseUrl}}"],
+              "path": ["tickets", ":ticketId", "use"],
+              "variable": [
+                {
+                  "key": "ticketId",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get My Tickets",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/tickets/user/my-tickets",
+              "host": ["{{baseUrl}}"],
+              "path": ["tickets", "user", "my-tickets"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Classes",
+      "item": [
+        {
+          "name": "Get All Classes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/classes",
+              "host": ["{{baseUrl}}"],
+              "path": ["classes"]
+            }
+          }
+        },
+        {
+          "name": "Register for Class (Student)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/classes/:classId/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["classes", ":classId", "register"],
+              "variable": [
+                {
+                  "key": "classId",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get My Classes (Student)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/classes/student/my-classes",
+              "host": ["{{baseUrl}}"],
+              "path": ["classes", "student", "my-classes"]
+            }
+          }
+        },
+        {
+          "name": "Create Class (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Hip Hop Basics\",\n  \"style\": \"Hip Hop\",\n  \"level\": \"BEGINNER\",\n  \"instructor\": \"Mike Johnson\",\n  \"description\": \"Learn fundamental hip hop moves\",\n  \"dayOfWeek\": 2,\n  \"startTime\": \"17:00\",\n  \"endTime\": \"18:30\",\n  \"duration\": 90,\n  \"capacity\": 20,\n  \"price\": 15000,\n  \"startDate\": \"2024-02-01\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/classes",
+              "host": ["{{baseUrl}}"],
+              "path": ["classes"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "Verify Payment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/payments/verify/:reference",
+              "host": ["{{baseUrl}}"],
+              "path": ["payments", "verify", ":reference"],
+              "variable": [
+                {
+                  "key": "reference",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Payment Logs (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/payments",
+              "host": ["{{baseUrl}}"],
+              "path": ["payments"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        {
+          "name": "Get Notifications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/notifications",
+              "host": ["{{baseUrl}}"],
+              "path": ["notifications"]
+            }
+          }
+        },
+        {
+          "name": "Get Unread Count",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/notifications/unread-count",
+              "host": ["{{baseUrl}}"],
+              "path": ["notifications", "unread-count"]
+            }
+          }
+        },
+        {
+          "name": "Mark as Read",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/notifications/:notificationId/read",
+              "host": ["{{baseUrl}}"],
+              "path": ["notifications", ":notificationId", "read"],
+              "variable": [
+                {
+                  "key": "notificationId",
+                  "value": ""
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Send Broadcast (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Studio Closure Notice\",\n  \"body\": \"Studio will be closed next Monday\",\n  \"type\": \"ADMIN_BROADCAST\",\n  \"sendToAll\": true,\n  \"sendEmail\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/notifications/broadcast",
+              "host": ["{{baseUrl}}"],
+              "path": ["notifications", "broadcast"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      }
+    }
+  ]
+}
