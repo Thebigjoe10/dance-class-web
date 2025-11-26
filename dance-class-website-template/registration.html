@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>SOP - Dance Class Registration</title>
+  <link href="css/style2 .css" rel="stylesheet">
+</head>
+<body>
+<form id="registration-form">
+    <h2>Register for Dance Classes</h2>
+
+    <label>Student Full Name</label>
+    <input type="text" name="name" required>
+
+    <label>Date of Birth</label>
+    <input type="date" name="dob" required>
+
+    <label>Gender</label>
+    <select name="gender" required>
+      <option value="">Select Gender</option>
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label>Parent/Guardian Full Name</label>
+    <input type="text" name="guardian_name" required>
+
+    <label>Email</label>
+    <input type="email" name="email" required>
+
+    <label>Phone Number</label>
+    <input type="tel" name="phone" required>
+
+    <label>Address</label>
+    <textarea name="address" required></textarea>
+
+    <label>Emergency Contact Name</label>
+    <input type="text" name="emergency_contact" required>
+
+    <label>Relationship to Student</label>
+    <input type="text" name="relationship" required>
+
+    <label>Emergency Phone Number</label>
+    <input type="tel" name="emergency_phone" required>
+
+    <label>Preferred Dance Style</label>
+    <select name="dance_style" required>
+      <option value="Ballet">Ballet</option>
+      <option value="Jazz">Jazz</option>
+      <option value="Hip Hop">Hip Hop</option>
+      <option value="Contemporary">Contemporary</option>
+      <option value="Tap">Tap</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label>Level of Experience</label>
+    <select name="experience_level" required>
+      <option value="Beginner">Beginner</option>
+      <option value="Intermediate">Intermediate</option>
+      <option value="Advanced">Advanced</option>
+    </select>
+
+    <label>Preferred Class Day and Time</label>
+    <input type="datetime-local" name="class_time" required>
+
+    <label>Medical Conditions or Allergies</label>
+    <textarea name="medical" placeholder="List any medical conditions or allergies..."></textarea>
+
+    <label>How did you hear about us?</label>
+    <input type="text" name="referral">
+
+    <label>Terms and Conditions</label>
+    <textarea readonly>
+By submitting this form, I acknowledge that participation in dance classes involves physical activity and I hereby release the dance studio and its instructors from any liability for injuries or accidents that may occur during classes or events.
+    </textarea>
+
+    <label>Signature:</label>
+    <div class="signature-container">
+      <canvas id="signature-pad"></canvas>
+      <button type="button" onclick="clearSignature()">Clear Signature</button>
+    </div>
+    <input type="hidden" name="signature" id="signature-input">
+
+    <label>Date Signed</label>
+    <input type="date" name="date_signed" required>
+
+    <input type="hidden" name="_next" value="https://yourdomain.com/payment">
+    <input type="hidden" name="_captcha" value="false">
+
+    <button type="submit">Submit</button>
+  </form>
+
+
+  <script>
+  const form = document.getElementById("registration-form");
+  const canvas = document.getElementById("signature-pad");
+  const ctx = canvas.getContext("2d");
+  let drawing = false;
+
+  canvas.addEventListener("mousedown", () => drawing = true);
+  canvas.addEventListener("mouseup", () => { drawing = false; ctx.beginPath(); });
+  canvas.addEventListener("mousemove", draw);
+  function draw(e) {
+    if (!drawing) return;
+    ctx.lineWidth = 2;
+    ctx.lineCap = "round";
+    ctx.strokeStyle = "#000";
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+  }
+  function clearSignature() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const signatureData = canvas.toDataURL();
+    document.getElementById("signature-input").value = signatureData;
+
+    const formData = new FormData(form);
+    const data = {};
+    formData.forEach((value, key) => data[key] = value);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+      if (result.url) {
+        window.location.href = result.url;
+      } else {
+        alert("Error initiating payment.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Server error. Try again.");
+    }
+  });
+</script>
+</body>
+</html>
