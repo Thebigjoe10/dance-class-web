@@ -34,7 +34,7 @@ app.use(generalLimiter);
 app.use('/api', routes);
 
 // Root endpoint
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.json({
     success: true,
     message: 'Dance School API',
