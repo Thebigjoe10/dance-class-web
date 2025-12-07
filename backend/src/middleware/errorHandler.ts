@@ -15,9 +15,9 @@ export class AppError extends Error {
 
 export const errorHandler = (
   err: Error | AppError,
-  req: Request,
+  _req: Request,
   res: Response,
-  next: NextFunction
+  _next: NextFunction
 ) => {
   if (err instanceof AppError) {
     return res.status(err.statusCode).json({
@@ -44,7 +44,7 @@ export const asyncHandler = (
   };
 };
 
-export const notFound = (req: Request, res: Response, next: NextFunction) => {
+export const notFound = (req: Request, res: Response, _next: NextFunction) => {
   res.status(404).json({
     success: false,
     message: `Route ${req.originalUrl} not found`,
