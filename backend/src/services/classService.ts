@@ -1,6 +1,6 @@
 import prisma from '../config/database';
 import { AppError } from '../middleware/errorHandler';
-import { ClassLevel, RegistrationStatus } from '@prisma/client';
+import { ClassLevel } from '@prisma/client';
 
 export const classService = {
   async createClass(data: {

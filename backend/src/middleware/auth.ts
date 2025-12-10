@@ -24,7 +24,7 @@ export const authenticate = (
     const decoded = verifyToken(token);
 
     req.user = decoded;
-    next();
+    return next();
   } catch (error) {
     return res.status(401).json({
       success: false,
@@ -49,13 +49,13 @@ export const authorize = (...roles: string[]) => {
       });
     }
 
-    next();
+    return next();
   };
 };
 
 export const optionalAuth = (
   req: AuthRequest,
-  res: Response,
+  _res: Response,
   next: NextFunction
 ) => {
   try {

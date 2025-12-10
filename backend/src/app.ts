@@ -1,4 +1,4 @@
-import express, { Express } from 'express';
+import express, { Express, Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -34,7 +34,7 @@ app.use(generalLimiter);
 app.use('/api', routes);
 
 // Root endpoint
-app.get('/', (_req, res) => {
+app.get('/', (_req: Request, res: Response) => {
   res.json({
     success: true,
     message: 'Dance School API',
