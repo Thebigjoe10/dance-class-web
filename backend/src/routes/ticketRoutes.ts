@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { ticketController } from '../controllers/ticketController';
-import { authenticate, authorize, optionalAuth } from '../middleware/auth';
+import { authenticate, authorize } from '../middleware/auth';
 import { validate, schemas } from '../middleware/validation';
 import { verifyLimiter } from '../middleware/rateLimiter';
 

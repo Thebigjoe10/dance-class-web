@@ -5,7 +5,7 @@ export const validate = (schema: ZodSchema) => {
   return (req: Request, res: Response, next: NextFunction) => {
     try {
       schema.parse(req.body);
-      next();
+      return next();
     } catch (error) {
       if (error instanceof z.ZodError) {
         return res.status(400).json({
@@ -17,7 +17,7 @@ export const validate = (schema: ZodSchema) => {
           })),
         });
       }
-      next(error);
+      return next(error);
     }
   };
 };

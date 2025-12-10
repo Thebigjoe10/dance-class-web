@@ -52,7 +52,7 @@ export const ticketController = {
       });
     }
 
-    res.json({
+    return res.json({
       success: true,
       message: 'Ticket is valid',
       valid: true,
