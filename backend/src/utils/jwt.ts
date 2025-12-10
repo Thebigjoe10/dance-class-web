@@ -1,4 +1,4 @@
-import { Secret, SignOptions, JsonValue | string } from 'jsonwebtoken';
+import { Secret, SignOptions, JsonValue } from 'jsonwebtoken';
 import jwt from 'jsonwebtoken';
 import { config } from '../config/env';
 
