@@ -134,86 +134,62 @@
         <!-- Events Start -->
         <div class="container-fluid events py-5">
             <div class="container py-5">
+                <!-- Header and Filters -->
                 <div class="pb-5">
                     <div class="row g-4 align-items-end">
                         <div class="col-xl-8">
                             <h4 class="text-secondary sub-title fw-bold wow fadeInUp" data-wow-delay="0.1s">Events</h4>
                             <h1 class="display-2 mb-0 wow fadeInUp" data-wow-delay="0.3s">Upcoming Events</h1>
                         </div>
-                        <div class="col-xl-4 text-xl-end pb-3 wow fadeInUp" data-wow-delay="0.3s">
-                            <a class="btn btn-primary rounded-pill text-white py-3 px-5" href="#">View All Events</a>
+                    </div>
+                </div>
+
+                <!-- Filters -->
+                <div class="row mb-4">
+                    <div class="col-lg-12">
+                        <div class="bg-white rounded p-4 shadow-sm">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Filter by Status</label>
+                                    <select id="statusFilter" class="form-select">
+                                        <option value="upcoming">Upcoming Events</option>
+                                        <option value="past">Past Events</option>
+                                        <option value="all">All Events</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Search</label>
+                                    <input type="text" id="searchFilter" class="form-control" placeholder="Search events...">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="row g-4 justify-content-center">
-                    <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="event-item rounded">
-                            <div class="position-relative">
-                                <img src="img/service-1.jpg" class="img-fluid rounded-top w-100" alt="Image">
-                                <div class="bg-primary text-white fw-bold rounded d-inline-block position-absolute p-2" style="top: 0; right: 0;">JAN 20</div>
-                                <div class="d-flex justify-content-between border-start border-end bg-white px-2 py-2 w-100 position-absolute" style="bottom: 0; left: 0; opacity: 0.8;">
-                                    <a href="#" class="text-dark"><i class="fas fa-clock text-primary"></i> 08:00AM - 10:00PM</a>
-                                    <a href="#" class="text-dark"><span class="fas fa-map-marker-alt text-primary"></span> New York</a>
-                                </div>
-                            </div>
-                            <div class="border border-top-0 rounded-bottom p-4">
-                                <a href="#" class="h4 mb-3 d-block">Open House - Springs Dance</a>
-                                <p class="mb-3">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni vero excepturi blanditiis quidem</p>
-                                <a class="btn btn-primary rounded-pill text-white py-2 px-4" href="#">Watch Now</a>
-                            </div>
-                        </div>
+
+                <!-- Loading State -->
+                <div id="eventsLoading" class="text-center py-5" style="display: none;">
+                    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                        <span class="visually-hidden">Loading...</span>
                     </div>
-                    <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="event-item rounded">
-                            <div class="position-relative">
-                                <img src="img/service-2.jpg" class="img-fluid rounded-top w-100" alt="Image">
-                                <div class="bg-primary text-white rounded d-inline-block position-absolute p-2" style="top: 0; right: 0;">JUN 30</div>
-                                <div class="d-flex justify-content-between border-start border-end bg-white px-2 py-2 w-100 position-absolute" style="bottom: 0; left: 0; opacity: 0.8;">
-                                    <a href="#" class="text-dark"><i class="fas fa-clock text-primary"></i> 08:00AM - 10:00PM</a>
-                                    <a href="#" class="text-dark"><span class="fas fa-map-marker-alt text-primary"></span> New York</a>
-                                </div>
-                            </div>
-                            <div class="border rounded-bottom p-4">
-                                <a href="#" class="h4 mb-3 d-block">Open House And Registration</a>
-                                <p class="mb-3">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni vero excepturi blanditiis quidem</p>
-                                <a class="btn btn-primary rounded-pill text-white py-2 px-4" href="#">Watch Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="event-item rounded">
-                            <div class="position-relative">
-                                <img src="img/service-3.jpg" class="img-fluid rounded-top w-100" alt="Image">
-                                <div class="bg-primary text-white rounded d-inline-block position-absolute p-2" style="top: 0; right: 0;">MAY 15</div>
-                                <div class="d-flex justify-content-between border-start border-end bg-white px-2 py-2 w-100 position-absolute" style="bottom: 0; left: 0; opacity: 0.8;">
-                                    <a href="#" class="text-dark"><i class="fas fa-clock text-primary"></i> 08:00AM - 10:00PM</a>
-                                    <a href="#" class="text-dark"><span class="fas fa-map-marker-alt text-primary"></span> New York</a>
-                                </div>
-                            </div>
-                            <div class="border rounded-bottom p-4">
-                                <a href="#" class="h4 mb-3 d-block">Open House Morris Dance</a>
-                                <p class="mb-3">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni vero excepturi blanditiis quidem</p>
-                                <a class="btn btn-primary rounded-pill text-white py-2 px-4" href="#">Watch Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="0.7s">
-                        <div class="event-item rounded">
-                            <div class="position-relative">
-                                <img src="img/service-4.jpg" class="img-fluid rounded-top w-100" alt="Image">
-                                <div class="bg-primary text-white rounded d-inline-block position-absolute p-2" style="top: 0; right: 0;">APR 2</div>
-                                <div class="d-flex justify-content-between border-start border-end bg-white px-2 py-2 w-100 position-absolute" style="bottom: 0; left: 0; opacity: 0.8;">
-                                    <a href="#" class="text-dark"><i class="fas fa-clock text-primary"></i> 08:00AM - 10:00PM</a>
-                                    <a href="#" class="text-dark"><span class="fas fa-map-marker-alt text-primary"></span> New York</a>
-                                </div>
-                            </div>
-                            <div class="border rounded-bottom p-4">
-                                <a href="#" class="h4 mb-3 d-block">Open House Dance Studio</a>
-                                <p class="mb-3">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magni vero excepturi blanditiis quidem</p>
-                                <a class="btn btn-primary rounded-pill text-white py-2 px-4" href="#">Watch Now</a>
-                            </div>
-                        </div>
-                    </div>
+                    <p class="mt-3 text-muted">Loading events...</p>
+                </div>
+
+                <!-- Error State -->
+                <div id="eventsError" class="alert alert-danger" role="alert" style="display: none;">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <span id="eventsErrorMessage"></span>
+                </div>
+
+                <!-- Empty State -->
+                <div id="eventsEmpty" class="text-center py-5" style="display: none;">
+                    <i class="fas fa-calendar-times text-muted" style="font-size: 4rem;"></i>
+                    <h3 class="mt-4 text-muted">No events found</h3>
+                    <p class="text-muted">Try adjusting your filters or check back later.</p>
+                </div>
+
+                <!-- Events Grid -->
+                <div id="eventsContainer" class="row g-4 justify-content-center">
+                    <!-- Events will be dynamically inserted here -->
                 </div>
             </div>
         </div>
@@ -861,8 +837,161 @@
     <!-- API Configuration -->
     <script src="js/api-config.js"></script>
 
+    <!-- Auth -->
+    <script src="js/auth.js"></script>
+
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <!-- Events Page Script -->
+    <script>
+        let allEvents = [];
+        let filteredEvents = [];
+
+        // Fetch events on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            await fetchEvents();
+            setupFilters();
+        });
+
+        async function fetchEvents() {
+            const loadingEl = document.getElementById('eventsLoading');
+            const errorEl = document.getElementById('eventsError');
+            const emptyEl = document.getElementById('eventsEmpty');
+            const containerEl = document.getElementById('eventsContainer');
+
+            try {
+                // Show loading
+                loadingEl.style.display = 'block';
+                errorEl.style.display = 'none';
+                emptyEl.style.display = 'none';
+                containerEl.innerHTML = '';
+
+                // Fetch events from API
+                const response = await apiGet(`${API_BASE_URL}/events`);
+                allEvents = response.events || response || [];
+                filteredEvents = [...allEvents];
+
+                // Hide loading
+                loadingEl.style.display = 'none';
+
+                // Apply default filter (upcoming events)
+                applyFilters();
+            } catch (error) {
+                console.error('Error fetching events:', error);
+                loadingEl.style.display = 'none';
+                errorEl.style.display = 'block';
+                document.getElementById('eventsErrorMessage').textContent =
+                    error.message || 'Failed to load events. Please try again later.';
+            }
+        }
+
+        function displayEvents() {
+            const containerEl = document.getElementById('eventsContainer');
+            const emptyEl = document.getElementById('eventsEmpty');
+
+            if (filteredEvents.length === 0) {
+                containerEl.innerHTML = '';
+                emptyEl.style.display = 'block';
+                return;
+            }
+
+            emptyEl.style.display = 'none';
+
+            containerEl.innerHTML = filteredEvents.map((event, index) => {
+                const delay = (index % 4) * 0.2 + 0.1;
+                const imgIndex = (index % 4) + 1;
+                const eventDate = new Date(event.date);
+                const dateStr = formatEventDate(eventDate);
+                const price = event.price ? `$${event.price}` : 'Free';
+                const availableTickets = (event.capacity || 0) - (event.ticketsSold || 0);
+                const isSoldOut = availableTickets <= 0;
+
+                return `
+                    <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="${delay}s">
+                        <div class="event-item rounded h-100 d-flex flex-column">
+                            <div class="position-relative">
+                                <img src="${event.imageUrl || `img/service-${imgIndex}.jpg`}"
+                                     class="img-fluid rounded-top w-100"
+                                     alt="${event.title}"
+                                     style="height: 250px; object-fit: cover;">
+                                <div class="bg-primary text-white fw-bold rounded d-inline-block position-absolute p-2" style="top: 0; right: 0;">
+                                    ${dateStr}
+                                </div>
+                                ${isSoldOut ? '<div class="bg-danger text-white fw-bold rounded position-absolute p-2" style="top: 0; left: 0;">SOLD OUT</div>' : ''}
+                                <div class="d-flex justify-content-between border-start border-end bg-white px-2 py-2 w-100 position-absolute" style="bottom: 0; left: 0; opacity: 0.9;">
+                                    <span class="text-dark"><i class="fas fa-clock text-primary me-1"></i> ${event.time || 'TBA'}</span>
+                                    <span class="text-dark"><i class="fas fa-map-marker-alt text-primary me-1"></i> ${event.venue || 'TBA'}</span>
+                                </div>
+                            </div>
+                            <div class="border border-top-0 rounded-bottom p-4 flex-grow-1 d-flex flex-column">
+                                <a href="event-detail.html?id=${event.id}" class="h4 mb-3 d-block text-dark">${event.title}</a>
+                                <p class="mb-3 text-muted flex-grow-1">${truncateText(event.description, 100)}</p>
+                                <div class="mt-auto">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="text-primary fw-bold">${price}</span>
+                                        ${!isSoldOut ? `<span class="text-muted"><i class="fas fa-ticket-alt me-1"></i>${availableTickets} left</span>` : ''}
+                                    </div>
+                                    <a class="btn btn-primary rounded-pill text-white py-2 px-4 w-100"
+                                       href="event-detail.html?id=${event.id}">
+                                        ${isSoldOut ? 'View Details' : 'Buy Ticket'}
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function setupFilters() {
+            const statusFilter = document.getElementById('statusFilter');
+            const searchFilter = document.getElementById('searchFilter');
+
+            statusFilter.addEventListener('change', applyFilters);
+            searchFilter.addEventListener('input', applyFilters);
+        }
+
+        function applyFilters() {
+            const statusFilter = document.getElementById('statusFilter').value;
+            const searchFilter = document.getElementById('searchFilter').value.toLowerCase();
+            const now = new Date();
+
+            filteredEvents = allEvents.filter(event => {
+                const eventDate = new Date(event.date);
+                const isUpcoming = eventDate >= now;
+
+                // Filter by status
+                let matchesStatus = true;
+                if (statusFilter === 'upcoming') {
+                    matchesStatus = isUpcoming;
+                } else if (statusFilter === 'past') {
+                    matchesStatus = !isUpcoming;
+                }
+
+                // Filter by search
+                const matchesSearch = !searchFilter ||
+                    event.title.toLowerCase().includes(searchFilter) ||
+                    (event.description && event.description.toLowerCase().includes(searchFilter)) ||
+                    (event.venue && event.venue.toLowerCase().includes(searchFilter));
+
+                return matchesStatus && matchesSearch;
+            });
+
+            displayEvents();
+        }
+
+        function formatEventDate(date) {
+            const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+            return `${months[date.getMonth()]} ${date.getDate()}`;
+        }
+
+        function truncateText(text, maxLength) {
+            if (!text) return 'No description available.';
+            if (text.length <= maxLength) return text;
+            return text.substring(0, maxLength) + '...';
+        }
+    </script>
     </body>
 
 </html>
