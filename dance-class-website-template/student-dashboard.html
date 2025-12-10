@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Student Dashboard - Dance Class</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Yantramanav:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--bs-primary) 0%, var(--bs-secondary) 100%);
+            padding: 40px 0;
+            color: white;
+        }
+
+        .dashboard-header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-header p {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        .dashboard-container {
+            padding: 60px 0;
+            background: #f8f9fa;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .stat-card .icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card.primary .icon {
+            background: rgba(var(--bs-primary-rgb), 0.1);
+            color: var(--bs-primary);
+        }
+
+        .stat-card.success .icon {
+            background: rgba(25, 135, 84, 0.1);
+            color: #198754;
+        }
+
+        .stat-card.info .icon {
+            background: rgba(13, 202, 240, 0.1);
+            color: #0dcaf0;
+        }
+
+        .stat-card.warning .icon {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+
+        .stat-card h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .stat-card p {
+            color: #666;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .content-card h4 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--bs-primary);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .content-card h4 i {
+            margin-right: 10px;
+        }
+
+        .class-item, .ticket-item {
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+
+        .class-item:hover, .ticket-item:hover {
+            border-color: var(--bs-primary);
+            background: #f8f9fa;
+        }
+
+        .class-item h5, .ticket-item h5 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .class-item p, .ticket-item p {
+            margin: 5px 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .class-item .badge, .ticket-item .badge {
+            font-size: 12px;
+            padding: 6px 12px;
+        }
+
+        .quick-action-btn {
+            border-radius: 10px;
+            padding: 20px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .quick-action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(var(--bs-primary-rgb), 0.3);
+        }
+
+        .quick-action-btn i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-header h1 {
+                font-size: 28px;
+            }
+
+            .stat-card {
+                padding: 20px;
+            }
+
+            .content-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-secondary px-5 d-none d-lg-block">
+        <div class="row gx-0 align-items-center" style="height: 45px;">
+            <div class="col-lg-8 text-center text-lg-start mb-lg-0">
+                <div class="d-flex flex-wrap">
+                    <a href="#" class="text-light me-4"><i class="fas fa-map-marker-alt text-primary me-2"></i>Find A Location</a>
+                    <a href="#" class="text-light me-4"><i class="fas fa-phone-alt text-primary me-2"></i>+01234567890</a>
+                    <a href="#" class="text-light me-0"><i class="fas fa-envelope text-primary me-2"></i>Example@gmail.com</a>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center text-lg-end">
+                <div class="d-flex justify-content-end">
+                    <div class="border-end border-start py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-twitter"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white px-4 px-lg-5 py-3 py-lg-0 sticky-top">
+        <a href="index.html" class="navbar-brand p-0">
+            <h1 class="text-primary m-0"><i class="fas fa-biohazard me-3"></i>SOP</h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="index.html" class="nav-item nav-link">Home</a>
+                <a href="student-dashboard.html" class="nav-item nav-link active">Dashboard</a>
+                <a href="my-classes.html" class="nav-item nav-link">My Classes</a>
+                <a href="my-tickets.html" class="nav-item nav-link">My Tickets</a>
+                <a href="classes.html" class="nav-item nav-link">Browse Classes</a>
+                <a href="event.html" class="nav-item nav-link">Events</a>
+            </div>
+            <button class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4 logout-btn">
+                <i class="fas fa-sign-out-alt me-2"></i>Logout
+            </button>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Dashboard Header Start -->
+    <div class="dashboard-header">
+        <div class="container">
+            <h1>Welcome back, <span id="studentName">Student</span>!</h1>
+            <p>Here's what's happening with your dance journey today.</p>
+        </div>
+    </div>
+    <!-- Dashboard Header End -->
+
+    <!-- Dashboard Content Start -->
+    <div class="container-fluid dashboard-container">
+        <div class="container">
+            <!-- Statistics Cards -->
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-card primary">
+                        <div class="icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 id="enrolledClassesCount">0</h3>
+                        <p>Enrolled Classes</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-card success">
+                        <div class="icon">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                        <h3 id="purchasedTicketsCount">0</h3>
+                        <p>Purchased Tickets</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-card info">
+                        <div class="icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <h3 id="upcomingClassesCount">0</h3>
+                        <p>Upcoming This Week</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-card warning">
+                        <div class="icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h3 id="userLevel">N/A</h3>
+                        <p>Your Level</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="row">
+                <!-- Enrolled Classes -->
+                <div class="col-lg-8">
+                    <div class="content-card">
+                        <h4><i class="fas fa-graduation-cap"></i>My Enrolled Classes</h4>
+                        <div id="enrolledClassesList">
+                            <div class="loading-spinner">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="mt-3">Loading your classes...</p>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <a href="my-classes.html" class="btn btn-outline-primary">View All Classes</a>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <h4><i class="fas fa-ticket-alt"></i>My Event Tickets</h4>
+                        <div id="ticketsList">
+                            <div class="loading-spinner">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="mt-3">Loading your tickets...</p>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <a href="my-tickets.html" class="btn btn-outline-primary">View All Tickets</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="col-lg-4">
+                    <div class="content-card">
+                        <h4><i class="fas fa-bolt"></i>Quick Actions</h4>
+                        <a href="classes.html" class="btn btn-primary quick-action-btn">
+                            <i class="fas fa-search"></i>Browse Classes
+                        </a>
+                        <a href="event.html" class="btn btn-success quick-action-btn">
+                            <i class="fas fa-ticket-alt"></i>Buy Event Tickets
+                        </a>
+                        <a href="#" class="btn btn-info quick-action-btn" id="viewProfileBtn">
+                            <i class="fas fa-user"></i>View Profile
+                        </a>
+                        <a href="my-classes.html" class="btn btn-warning quick-action-btn">
+                            <i class="fas fa-calendar"></i>View Schedule
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Dashboard Content End -->
+
+    <!-- Footer Start -->
+    <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="text-white mb-4"><i class="fas fa-biohazard me-3"></i>SOP Dance</h4>
+                        <p>Join our vibrant dance community and discover your passion for movement.</p>
+                        <div class="d-flex align-items-center">
+                            <a class="btn-square btn btn-primary text-white rounded-circle me-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn-square btn btn-primary text-white rounded-circle me-2" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="btn-square btn btn-primary text-white rounded-circle me-2" href="#"><i class="fab fa-instagram"></i></a>
+                            <a class="btn-square btn btn-primary text-white rounded-circle me-0" href="#"><i class="fab fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="mb-4 text-white">Quick Links</h4>
+                        <a href="about.html"><i class="fas fa-angle-right me-2"></i> About</a>
+                        <a href="classes.html"><i class="fas fa-angle-right me-2"></i> Classes</a>
+                        <a href="event.html"><i class="fas fa-angle-right me-2"></i> Events</a>
+                        <a href="contact.html"><i class="fas fa-angle-right me-2"></i> Contact</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="mb-4 text-white">Contact Info</h4>
+                        <a href="#"><i class="fa fa-map-marker-alt me-2"></i> 123 Street, New York, USA</a>
+                        <a href="#"><i class="fas fa-envelope me-2"></i> info@example.com</a>
+                        <a href="#"><i class="fas fa-phone me-2"></i> +012 345 67890</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="mb-4 text-white">Opening Hours</h4>
+                        <div class="mb-3">
+                            <h6 class="text-muted mb-0">Mon - Friday:</h6>
+                            <p class="text-white mb-0">09.00 am to 07.00 pm</p>
+                        </div>
+                        <div class="mb-3">
+                            <h6 class="text-muted mb-0">Saturday:</h6>
+                            <p class="text-white mb-0">10.00 am to 05.00 pm</p>
+                        </div>
+                        <div class="mb-3">
+                            <h6 class="text-muted mb-0">Vacation:</h6>
+                            <p class="text-white mb-0">All Sunday is our vacation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Copyright Start -->
+    <div class="container-fluid copyright py-4">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-md-0">
+                    <span class="text-white"><a href="#"><i class="fas fa-copyright text-light me-2"></i>SOP Dance</a>, All right reserved.</span>
+                </div>
+                <div class="col-md-6 text-center text-md-end text-white">
+                    Designed by <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Copyright End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary btn-lg-square back-to-top"><i class="fa fa-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/counterup/counterup.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <!-- API & Auth Scripts -->
+    <script src="js/api-config.js"></script>
+    <script src="js/auth.js"></script>
+
+    <!-- Dashboard Script -->
+    <script>
+        // Require student authentication
+        requireStudent();
+
+        // Dashboard data
+        let enrolledClasses = [];
+        let myTickets = [];
+
+        // Load dashboard data
+        async function loadDashboardData() {
+            try {
+                // Get current user
+                const user = getCurrentUser();
+                if (user) {
+                    document.getElementById('studentName').textContent = user.name || 'Student';
+                    document.getElementById('userLevel').textContent = user.level || 'N/A';
+                }
+
+                // Load enrolled classes
+                await loadEnrolledClasses();
+
+                // Load tickets
+                await loadTickets();
+
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+            }
+        }
+
+        // Load enrolled classes
+        async function loadEnrolledClasses() {
+            try {
+                const response = await apiGet(`${API_BASE_URL}/classes/student/my-classes`);
+                enrolledClasses = response.data || response || [];
+
+                // Update count
+                document.getElementById('enrolledClassesCount').textContent = enrolledClasses.length;
+
+                // Calculate upcoming classes this week
+                const today = new Date();
+                const upcomingCount = enrolledClasses.filter(cls => {
+                    // Simple check - in real app would check actual schedule
+                    return true; // Placeholder
+                }).length;
+                document.getElementById('upcomingClassesCount').textContent = Math.min(upcomingCount, enrolledClasses.length);
+
+                // Display classes (limit to 3)
+                displayEnrolledClasses(enrolledClasses.slice(0, 3));
+
+            } catch (error) {
+                console.error('Error loading classes:', error);
+                document.getElementById('enrolledClassesList').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>Error loading classes. Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Display enrolled classes
+        function displayEnrolledClasses(classes) {
+            const container = document.getElementById('enrolledClassesList');
+
+            if (classes.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-graduation-cap"></i>
+                        <p>You haven't enrolled in any classes yet.</p>
+                        <a href="classes.html" class="btn btn-primary">Browse Classes</a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = classes.map(cls => `
+                <div class="class-item">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <h5>${cls.title || cls.name}</h5>
+                            <p><i class="fas fa-user me-2"></i><strong>Instructor:</strong> ${cls.instructor || 'TBA'}</p>
+                            <p><i class="fas fa-calendar me-2"></i><strong>Schedule:</strong> ${cls.day || 'TBA'} at ${cls.time || 'TBA'}</p>
+                            <p><i class="fas fa-signal me-2"></i><strong>Level:</strong> ${cls.level || 'All Levels'}</p>
+                        </div>
+                        <span class="badge bg-primary">${cls.level || 'Enrolled'}</span>
+                    </div>
+                    <div class="mt-3">
+                        <a href="my-classes.html" class="btn btn-sm btn-outline-primary">View Details</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load tickets
+        async function loadTickets() {
+            try {
+                const response = await apiGet(`${API_BASE_URL}/tickets/user/my-tickets`);
+                myTickets = response.data || response || [];
+
+                // Update count
+                document.getElementById('purchasedTicketsCount').textContent = myTickets.length;
+
+                // Display tickets (limit to 3)
+                displayTickets(myTickets.slice(0, 3));
+
+            } catch (error) {
+                console.error('Error loading tickets:', error);
+                document.getElementById('ticketsList').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>Error loading tickets. Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Display tickets
+        function displayTickets(tickets) {
+            const container = document.getElementById('ticketsList');
+
+            if (tickets.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-ticket-alt"></i>
+                        <p>You haven't purchased any event tickets yet.</p>
+                        <a href="event.html" class="btn btn-primary">Browse Events</a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = tickets.map(ticket => {
+                const statusClass = ticket.status === 'CONFIRMED' ? 'success' :
+                                  ticket.status === 'USED' ? 'secondary' : 'warning';
+                return `
+                    <div class="ticket-item">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h5>${ticket.event?.title || ticket.eventTitle || 'Event Ticket'}</h5>
+                                <p><i class="fas fa-calendar me-2"></i><strong>Date:</strong> ${ticket.event?.date || ticket.eventDate || 'TBA'}</p>
+                                <p><i class="fas fa-barcode me-2"></i><strong>Code:</strong> ${ticket.ticketCode || ticket.code}</p>
+                            </div>
+                            <span class="badge bg-${statusClass}">${ticket.status}</span>
+                        </div>
+                        <div class="mt-3">
+                            <a href="my-tickets.html" class="btn btn-sm btn-outline-primary">View QR Code</a>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // View profile button
+        document.getElementById('viewProfileBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            const user = getCurrentUser();
+            alert(`Profile Information:\n\nName: ${user.name}\nEmail: ${user.email}\nLevel: ${user.level || 'N/A'}\nPhone: ${user.phone || 'N/A'}`);
+        });
+
+        // Load data on page load
+        loadDashboardData();
+    </script>
+</body>
+
+</html>
