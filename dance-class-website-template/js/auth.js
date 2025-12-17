@@ -95,8 +95,10 @@ async function login(email, password) {
       password
     });
 
-    // Save token and user data
-    saveAuthData(response.token, response.user);
+    // Save token and user data (backend wraps data in 'data' object)
+    if (response.data && response.data.token && response.data.user) {
+      saveAuthData(response.data.token, response.data.user);
+    }
 
     return response;
   } catch (error) {
@@ -114,9 +116,9 @@ async function register(userData) {
   try {
     const response = await apiPost(`${API_BASE_URL}/auth/register`, userData);
 
-    // Save token and user data if returned
-    if (response.token && response.user) {
-      saveAuthData(response.token, response.user);
+    // Save token and user data if returned (backend wraps data in 'data' object)
+    if (response.data && response.data.token && response.data.user) {
+      saveAuthData(response.data.token, response.data.user);
     }
 
     return response;

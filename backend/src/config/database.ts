@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
 
+// PostgreSQL configuration
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });

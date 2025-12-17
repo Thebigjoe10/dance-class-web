@@ -203,7 +203,7 @@
                 </div>
 
                 <!-- Classes Grid -->
-                <div id="classesContainer" class="row g-4">
+                <div id="classes-container" class="row g-4">
                     <!-- Classes will be dynamically inserted here -->
                 </div>
             </div>
@@ -871,137 +871,23 @@
     <script src="lib/lightbox/js/lightbox.min.js"></script>
     
 
+    <!-- Utilities -->
+    <script src="js/utils.js"></script>
+
     <!-- API Configuration -->
     <script src="js/api-config.js"></script>
 
     <!-- Auth -->
     <script src="js/auth.js"></script>
 
+    <!-- Navigation -->
+    <script src="js/navigation.js"></script>
+
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
     <!-- Classes Page Script -->
-    <script>
-        let allClasses = [];
-        let filteredClasses = [];
-
-        // Fetch classes on page load
-        document.addEventListener('DOMContentLoaded', async () => {
-            await fetchClasses();
-            setupFilters();
-        });
-
-        async function fetchClasses() {
-            const loadingEl = document.getElementById('classesLoading');
-            const errorEl = document.getElementById('classesError');
-            const emptyEl = document.getElementById('classesEmpty');
-            const containerEl = document.getElementById('classesContainer');
-
-            try {
-                // Show loading
-                loadingEl.style.display = 'block';
-                errorEl.style.display = 'none';
-                emptyEl.style.display = 'none';
-                containerEl.innerHTML = '';
-
-                // Fetch classes from API
-                const response = await apiGet(`${API_BASE_URL}/classes`);
-                allClasses = response.classes || response || [];
-                filteredClasses = [...allClasses];
-
-                // Hide loading
-                loadingEl.style.display = 'none';
-
-                // Display classes
-                displayClasses();
-            } catch (error) {
-                console.error('Error fetching classes:', error);
-                loadingEl.style.display = 'none';
-                errorEl.style.display = 'block';
-                document.getElementById('classesErrorMessage').textContent =
-                    error.message || 'Failed to load classes. Please try again later.';
-            }
-        }
-
-        function displayClasses() {
-            const containerEl = document.getElementById('classesContainer');
-            const emptyEl = document.getElementById('classesEmpty');
-
-            if (filteredClasses.length === 0) {
-                containerEl.innerHTML = '';
-                emptyEl.style.display = 'block';
-                return;
-            }
-
-            emptyEl.style.display = 'none';
-
-            containerEl.innerHTML = filteredClasses.map((classItem, index) => {
-                const delay = (index % 4) * 0.2 + 0.1;
-                const imgIndex = (index % 3) + 1;
-                const price = classItem.price ? `$${classItem.price}` : 'Free';
-                const enrolled = classItem.currentEnrollment || 0;
-                const capacity = classItem.capacity || 0;
-                const spotsLeft = capacity - enrolled;
-
-                return `
-                    <div class="col-md-6 col-lg-4 col-xl-3 wow fadeInUp" data-wow-delay="${delay}s">
-                        <div class="class-item bg-white rounded h-100">
-                            <div class="class-img rounded-top">
-                                <img src="img/class-${imgIndex}.jpg" class="img-fluid rounded-top w-100" alt="${classItem.name}">
-                                <div class="position-absolute top-0 end-0 m-3">
-                                    <span class="badge bg-primary">${classItem.level}</span>
-                                </div>
-                            </div>
-                            <div class="rounded-bottom p-4 d-flex flex-column">
-                                <a href="class-detail.html?id=${classItem.id}" class="h4 mb-3 d-block text-dark">${classItem.name}</a>
-                                <div class="mb-3">
-                                    <p class="mb-2"><i class="fas fa-user-tie text-primary me-2"></i>${classItem.instructor?.name || 'TBA'}</p>
-                                    <p class="mb-2"><i class="fas fa-music text-primary me-2"></i>${classItem.style}</p>
-                                    <p class="mb-2"><i class="fas fa-calendar-alt text-primary me-2"></i>${classItem.dayOfWeek}</p>
-                                    <p class="mb-2"><i class="fas fa-clock text-primary me-2"></i>${classItem.startTime} - ${classItem.endTime}</p>
-                                    <p class="mb-2"><i class="fas fa-users text-primary me-2"></i>${enrolled}/${capacity} enrolled</p>
-                                    ${spotsLeft > 0 && spotsLeft <= 5 ? `<p class="mb-2 text-warning"><i class="fas fa-exclamation-triangle me-2"></i>Only ${spotsLeft} spots left!</p>` : ''}
-                                    ${spotsLeft === 0 ? `<p class="mb-2 text-danger"><i class="fas fa-times-circle me-2"></i>Class Full</p>` : ''}
-                                </div>
-                                <div class="mt-auto">
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <span class="h5 mb-0 text-primary">${price}</span>
-                                    </div>
-                                    <a class="btn btn-primary rounded-pill text-white py-2 px-4 w-100" href="class-detail.html?id=${classItem.id}">View Details</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function setupFilters() {
-            const levelFilter = document.getElementById('levelFilter');
-            const dayFilter = document.getElementById('dayFilter');
-            const styleFilter = document.getElementById('styleFilter');
-
-            levelFilter.addEventListener('change', applyFilters);
-            dayFilter.addEventListener('change', applyFilters);
-            styleFilter.addEventListener('input', applyFilters);
-        }
-
-        function applyFilters() {
-            const levelFilter = document.getElementById('levelFilter').value;
-            const dayFilter = document.getElementById('dayFilter').value;
-            const styleFilter = document.getElementById('styleFilter').value.toLowerCase();
-
-            filteredClasses = allClasses.filter(classItem => {
-                const matchesLevel = !levelFilter || classItem.level === levelFilter;
-                const matchesDay = !dayFilter || classItem.dayOfWeek === dayFilter;
-                const matchesStyle = !styleFilter || classItem.style.toLowerCase().includes(styleFilter);
-
-                return matchesLevel && matchesDay && matchesStyle;
-            });
-
-            displayClasses();
-        }
-    </script>
+    <script src="js/classes.js"></script>
     </body>
 
 </html>
