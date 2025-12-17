@@ -476,8 +476,10 @@
     <script src="js/main.js"></script>
 
     <!-- API & Auth Scripts -->
+    <script src="js/utils.js"></script>
     <script src="js/api-config.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/navigation.js"></script>
 
     <!-- Dashboard Script -->
     <script>
@@ -488,63 +490,80 @@
         let enrolledClasses = [];
         let myTickets = [];
 
-        // Load dashboard data
+        // Load dashboard data on page load
         async function loadDashboardData() {
             try {
-                // Get current user
+                // Get current user and display welcome message
                 const user = getCurrentUser();
                 if (user) {
                     document.getElementById('studentName').textContent = user.name || 'Student';
                     document.getElementById('userLevel').textContent = user.level || 'N/A';
                 }
 
-                // Load enrolled classes
-                await loadEnrolledClasses();
-
-                // Load tickets
-                await loadTickets();
+                // Load enrolled classes and tickets in parallel
+                await Promise.all([
+                    loadEnrolledClasses(),
+                    loadTickets()
+                ]);
 
             } catch (error) {
                 console.error('Error loading dashboard data:', error);
+                showMessage('error', 'Failed to load dashboard data. Please refresh the page.');
             }
         }
 
-        // Load enrolled classes
+        // Load enrolled classes from API
         async function loadEnrolledClasses() {
+            const container = document.getElementById('enrolledClassesList');
+
             try {
+                // Show loading state
+                container.innerHTML = `
+                    <div class="loading-spinner">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-3">Loading your classes...</p>
+                    </div>
+                `;
+
+                // Fetch enrolled classes from API
                 const response = await apiGet(`${API_BASE_URL}/classes/student/my-classes`);
                 enrolledClasses = response.data || response || [];
 
-                // Update count
+                // Update statistics
                 document.getElementById('enrolledClassesCount').textContent = enrolledClasses.length;
 
-                // Calculate upcoming classes this week
-                const today = new Date();
-                const upcomingCount = enrolledClasses.filter(cls => {
-                    // Simple check - in real app would check actual schedule
-                    return true; // Placeholder
-                }).length;
-                document.getElementById('upcomingClassesCount').textContent = Math.min(upcomingCount, enrolledClasses.length);
+                // Calculate upcoming classes (for this example, we'll count all active classes)
+                const upcomingCount = enrolledClasses.length;
+                document.getElementById('upcomingClassesCount').textContent = upcomingCount;
 
-                // Display classes (limit to 3)
+                // Display classes (limit to 3 for dashboard)
                 displayEnrolledClasses(enrolledClasses.slice(0, 3));
 
             } catch (error) {
                 console.error('Error loading classes:', error);
-                document.getElementById('enrolledClassesList').innerHTML = `
+
+                // Reset counts to 0 on error
+                document.getElementById('enrolledClassesCount').textContent = '0';
+                document.getElementById('upcomingClassesCount').textContent = '0';
+
+                // Show error state
+                container.innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-exclamation-circle"></i>
                         <p>Error loading classes. Please try again later.</p>
+                        <button class="btn btn-primary mt-2" onclick="loadEnrolledClasses()">Retry</button>
                     </div>
                 `;
             }
         }
 
-        // Display enrolled classes
+        // Display enrolled classes in the UI
         function displayEnrolledClasses(classes) {
             const container = document.getElementById('enrolledClassesList');
 
-            if (classes.length === 0) {
+            if (!classes || classes.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-graduation-cap"></i>
@@ -555,52 +574,81 @@
                 return;
             }
 
-            container.innerHTML = classes.map(cls => `
-                <div class="class-item">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <div>
-                            <h5>${cls.title || cls.name}</h5>
-                            <p><i class="fas fa-user me-2"></i><strong>Instructor:</strong> ${cls.instructor || 'TBA'}</p>
-                            <p><i class="fas fa-calendar me-2"></i><strong>Schedule:</strong> ${cls.day || 'TBA'} at ${cls.time || 'TBA'}</p>
-                            <p><i class="fas fa-signal me-2"></i><strong>Level:</strong> ${cls.level || 'All Levels'}</p>
+            container.innerHTML = classes.map(cls => {
+                // Extract class information with fallbacks
+                const title = cls.title || cls.name || 'Dance Class';
+                const instructor = cls.instructor || cls.instructorName || 'TBA';
+                const schedule = cls.schedule || `${cls.day || 'TBA'} at ${cls.time || 'TBA'}`;
+                const level = cls.level || 'All Levels';
+                const description = cls.description || '';
+
+                return `
+                    <div class="class-item">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="flex-grow-1">
+                                <h5>${title}</h5>
+                                ${description ? `<p class="text-muted mb-2">${description.substring(0, 100)}${description.length > 100 ? '...' : ''}</p>` : ''}
+                                <p class="mb-1"><i class="fas fa-user me-2"></i><strong>Instructor:</strong> ${instructor}</p>
+                                <p class="mb-1"><i class="fas fa-calendar me-2"></i><strong>Schedule:</strong> ${schedule}</p>
+                                <p class="mb-0"><i class="fas fa-signal me-2"></i><strong>Level:</strong> ${level}</p>
+                            </div>
+                            <span class="badge bg-success ms-3">Enrolled</span>
                         </div>
-                        <span class="badge bg-primary">${cls.level || 'Enrolled'}</span>
+                        <div class="mt-3">
+                            <a href="my-classes.html" class="btn btn-sm btn-outline-primary">View Details</a>
+                        </div>
                     </div>
-                    <div class="mt-3">
-                        <a href="my-classes.html" class="btn btn-sm btn-outline-primary">View Details</a>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
-        // Load tickets
+        // Load tickets from API
         async function loadTickets() {
+            const container = document.getElementById('ticketsList');
+
             try {
+                // Show loading state
+                container.innerHTML = `
+                    <div class="loading-spinner">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-3">Loading your tickets...</p>
+                    </div>
+                `;
+
+                // Fetch user tickets from API
                 const response = await apiGet(`${API_BASE_URL}/tickets/user/my-tickets`);
                 myTickets = response.data || response || [];
 
-                // Update count
+                // Update ticket count
                 document.getElementById('purchasedTicketsCount').textContent = myTickets.length;
 
-                // Display tickets (limit to 3)
+                // Display tickets (limit to 3 for dashboard)
                 displayTickets(myTickets.slice(0, 3));
 
             } catch (error) {
                 console.error('Error loading tickets:', error);
-                document.getElementById('ticketsList').innerHTML = `
+
+                // Reset count to 0 on error
+                document.getElementById('purchasedTicketsCount').textContent = '0';
+
+                // Show error state
+                container.innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-exclamation-circle"></i>
                         <p>Error loading tickets. Please try again later.</p>
+                        <button class="btn btn-primary mt-2" onclick="loadTickets()">Retry</button>
                     </div>
                 `;
             }
         }
 
-        // Display tickets
+        // Display tickets in the UI
         function displayTickets(tickets) {
             const container = document.getElementById('ticketsList');
 
-            if (tickets.length === 0) {
+            if (!tickets || tickets.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-ticket-alt"></i>
@@ -612,34 +660,60 @@
             }
 
             container.innerHTML = tickets.map(ticket => {
+                // Determine status badge color
                 const statusClass = ticket.status === 'CONFIRMED' ? 'success' :
-                                  ticket.status === 'USED' ? 'secondary' : 'warning';
+                                  ticket.status === 'USED' ? 'secondary' :
+                                  ticket.status === 'PENDING' ? 'warning' : 'info';
+
+                // Extract ticket information with fallbacks
+                const eventTitle = ticket.event?.title || ticket.eventTitle || 'Event Ticket';
+                const eventDate = ticket.event?.date || ticket.eventDate || ticket.date;
+                const formattedDate = eventDate ? formatDate(eventDate) : 'TBA';
+                const ticketCode = ticket.ticketCode || ticket.code || 'N/A';
+                const status = ticket.status || 'PENDING';
+
                 return `
                     <div class="ticket-item">
                         <div class="d-flex justify-content-between align-items-start">
-                            <div>
-                                <h5>${ticket.event?.title || ticket.eventTitle || 'Event Ticket'}</h5>
-                                <p><i class="fas fa-calendar me-2"></i><strong>Date:</strong> ${ticket.event?.date || ticket.eventDate || 'TBA'}</p>
-                                <p><i class="fas fa-barcode me-2"></i><strong>Code:</strong> ${ticket.ticketCode || ticket.code}</p>
+                            <div class="flex-grow-1">
+                                <h5>${eventTitle}</h5>
+                                <p class="mb-1"><i class="fas fa-calendar me-2"></i><strong>Date:</strong> ${formattedDate}</p>
+                                <p class="mb-1"><i class="fas fa-barcode me-2"></i><strong>Ticket Code:</strong> ${ticketCode}</p>
+                                ${ticket.quantity ? `<p class="mb-0"><i class="fas fa-users me-2"></i><strong>Quantity:</strong> ${ticket.quantity}</p>` : ''}
                             </div>
-                            <span class="badge bg-${statusClass}">${ticket.status}</span>
+                            <span class="badge bg-${statusClass} ms-3">${status}</span>
                         </div>
                         <div class="mt-3">
-                            <a href="my-tickets.html" class="btn btn-sm btn-outline-primary">View QR Code</a>
+                            <a href="my-tickets.html" class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-qrcode me-1"></i>View QR Code
+                            </a>
                         </div>
                     </div>
                 `;
             }).join('');
         }
 
-        // View profile button
+        // View profile button handler
         document.getElementById('viewProfileBtn').addEventListener('click', function(e) {
             e.preventDefault();
             const user = getCurrentUser();
-            alert(`Profile Information:\n\nName: ${user.name}\nEmail: ${user.email}\nLevel: ${user.level || 'N/A'}\nPhone: ${user.phone || 'N/A'}`);
+            if (user) {
+                const profileInfo = `
+Profile Information
+
+Name: ${user.name || 'N/A'}
+Email: ${user.email || 'N/A'}
+Level: ${user.level || 'N/A'}
+Phone: ${user.phone || 'N/A'}
+Role: ${user.role || 'N/A'}
+                `.trim();
+                alert(profileInfo);
+            } else {
+                alert('Unable to load profile information.');
+            }
         });
 
-        // Load data on page load
+        // Initialize dashboard on page load
         loadDashboardData();
     </script>
 </body>

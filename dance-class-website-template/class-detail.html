@@ -328,8 +328,14 @@
     <!-- API Configuration -->
     <script src="js/api-config.js"></script>
 
+    <!-- Utilities -->
+    <script src="js/utils.js"></script>
+
     <!-- Auth -->
     <script src="js/auth.js"></script>
+
+    <!-- Navigation -->
+    <script src="js/navigation.js"></script>
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
@@ -340,9 +346,8 @@
         let classId = null;
 
         document.addEventListener('DOMContentLoaded', async () => {
-            // Get class ID from URL
-            const urlParams = new URLSearchParams(window.location.search);
-            classId = urlParams.get('id');
+            // Get class ID from URL parameter
+            classId = getUrlParameter('id');
 
             if (!classId) {
                 showError('No class ID provided');

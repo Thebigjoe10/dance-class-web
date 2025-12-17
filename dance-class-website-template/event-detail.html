@@ -297,6 +297,9 @@
     <!-- API Configuration -->
     <script src="js/api-config.js"></script>
 
+    <!-- Utilities -->
+    <script src="js/utils.js"></script>
+
     <!-- Auth -->
     <script src="js/auth.js"></script>
 
@@ -309,9 +312,8 @@
         let eventId = null;
 
         document.addEventListener('DOMContentLoaded', async () => {
-            // Get event ID from URL
-            const urlParams = new URLSearchParams(window.location.search);
-            eventId = urlParams.get('id');
+            // Get event ID from URL using utility function
+            eventId = getUrlParameter('id');
 
             if (!eventId) {
                 showError('No event ID provided');
@@ -332,7 +334,7 @@
                 contentEl.style.display = 'none';
 
                 const response = await apiGet(`${API_BASE_URL}/events/${eventId}`);
-                currentEvent = response.event || response;
+                currentEvent = response.data || response;
 
                 loadingEl.style.display = 'none';
                 contentEl.style.display = 'block';
@@ -356,10 +358,8 @@
             document.getElementById('eventTitle').textContent = currentEvent.title;
             document.getElementById('eventDescription').textContent = currentEvent.description || 'No description available.';
 
-            // Format and set date
-            const eventDate = new Date(currentEvent.date);
-            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('eventDate').textContent = eventDate.toLocaleDateString('en-US', dateOptions);
+            // Format and set date using utility function
+            document.getElementById('eventDate').textContent = formatDate(currentEvent.date);
 
             // Set time
             document.getElementById('eventTime').textContent = currentEvent.time || 'TBA';
@@ -367,16 +367,18 @@
             // Set venue
             document.getElementById('eventVenue').textContent = currentEvent.venue || 'TBA';
 
-            // Set price
-            const price = currentEvent.price ? `$${currentEvent.price}` : 'Free';
+            // Set price in Nigerian Naira
+            const price = currentEvent.price ? `₦${currentEvent.price.toLocaleString()}` : 'Free';
             document.getElementById('eventPrice').textContent = price;
             document.getElementById('ticketPriceText').textContent = currentEvent.price ? 'General Admission' : 'Free Entry';
             document.getElementById('ticketPriceAmount').textContent = price;
 
             // Calculate and set remaining tickets
             const capacity = currentEvent.capacity || 0;
-            const sold = currentEvent.ticketsSold || 0;
-            const remaining = capacity - sold;
+            const sold = currentEvent.soldTickets || 0;
+            const remaining = currentEvent.availableTickets !== undefined
+                ? currentEvent.availableTickets
+                : capacity - sold;
             const isSoldOut = remaining <= 0;
 
             document.getElementById('ticketsRemaining').textContent = isSoldOut ? '0 (Sold Out)' : `${remaining} of ${capacity}`;
@@ -407,7 +409,19 @@
         }
 
         function handleBuyTicket() {
-            // Redirect to checkout page
+            // Check if user is authenticated
+            if (!isAuthenticated()) {
+                // Show alert to login first
+                const loginMessage = 'Please login or register to purchase tickets.';
+                if (confirm(`${loginMessage}\n\nClick OK to go to login page.`)) {
+                    // Save current page as redirect destination
+                    localStorage.setItem('redirectAfterLogin', window.location.href);
+                    window.location.href = 'login.html';
+                }
+                return;
+            }
+
+            // User is authenticated, redirect to checkout page
             window.location.href = `checkout.html?eventId=${eventId}`;
         }
 
