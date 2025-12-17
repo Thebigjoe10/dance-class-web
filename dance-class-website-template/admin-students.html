@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Manage Students - Admin Dashboard</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Yantramanav:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .dashboard-header {
+            background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+            padding: 40px 0;
+            color: white;
+        }
+
+        .dashboard-header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-header p {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        .dashboard-container {
+            padding: 60px 0;
+            background: #f8f9fa;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .content-card h4 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .table-responsive-custom {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .table {
+            margin-bottom: 0;
+            font-size: 14px;
+        }
+
+        .table thead th {
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f0f0 100%);
+            border-color: #e0e0e0;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .table tbody tr {
+            border-color: #f0f0f0;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .action-buttons .btn {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .search-filter-bar {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+            color: white;
+        }
+
+        .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        .badge {
+            font-size: 12px;
+            padding: 6px 12px;
+        }
+
+        .profile-info {
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+
+        .profile-info p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .profile-info strong {
+            color: #333;
+            min-width: 120px;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-header h1 {
+                font-size: 28px;
+            }
+
+            .content-card {
+                padding: 20px;
+            }
+
+            .action-buttons {
+                justify-content: stretch;
+            }
+
+            .action-buttons button {
+                flex: 1;
+            }
+
+            .table {
+                font-size: 12px;
+            }
+
+            .action-buttons .btn {
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-secondary px-5 d-none d-lg-block">
+        <div class="row gx-0 align-items-center" style="height: 45px;">
+            <div class="col-lg-8 text-center text-lg-start mb-lg-0">
+                <div class="d-flex flex-wrap">
+                    <a href="#" class="text-light me-4"><i class="fas fa-map-marker-alt text-primary me-2"></i>Find A Location</a>
+                    <a href="#" class="text-light me-4"><i class="fas fa-phone-alt text-primary me-2"></i>+01234567890</a>
+                    <a href="#" class="text-light me-0"><i class="fas fa-envelope text-primary me-2"></i>Example@gmail.com</a>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center text-lg-end">
+                <div class="d-flex justify-content-end">
+                    <div class="border-end border-start py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-twitter"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white px-4 px-lg-5 py-3 py-lg-0 sticky-top">
+        <a href="index.html" class="navbar-brand p-0">
+            <h1 class="text-primary m-0"><i class="fas fa-biohazard me-3"></i>SOP Admin</h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="index.html" class="nav-item nav-link">Home</a>
+                <a href="admin-dashboard.html" class="nav-item nav-link">Dashboard</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Management</a>
+                    <div class="dropdown-menu m-0">
+                        <a href="admin-classes.html" class="dropdown-item">Manage Classes</a>
+                        <a href="admin-events.html" class="dropdown-item">Manage Events</a>
+                        <a href="admin-students.html" class="dropdown-item active">Manage Students</a>
+                        <a href="admin-verify-ticket.html" class="dropdown-item">Verify Tickets</a>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4 logout-btn">
+                <i class="fas fa-sign-out-alt me-2"></i>Logout
+            </button>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Dashboard Header Start -->
+    <div class="dashboard-header">
+        <div class="container">
+            <h1><i class="fas fa-users me-3"></i>Manage Students</h1>
+            <p>View, edit, and manage student accounts</p>
+        </div>
+    </div>
+    <!-- Dashboard Header End -->
+
+    <!-- Dashboard Content Start -->
+    <div class="container-fluid dashboard-container">
+        <div class="container">
+            <!-- Search and Filter Bar -->
+            <div class="search-filter-bar">
+                <div class="row align-items-end">
+                    <div class="col-md-4">
+                        <label for="searchInput" class="form-label">Search Students</label>
+                        <input type="text" class="form-control" id="searchInput" placeholder="By name or email...">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="filterLevel" class="form-label">Filter by Level</label>
+                        <select class="form-select" id="filterLevel">
+                            <option value="">All Levels</option>
+                            <option value="BEGINNER">Beginner</option>
+                            <option value="INTERMEDIATE">Intermediate</option>
+                            <option value="ADVANCED">Advanced</option>
+                        </select>
+                    </div>
+                    <div class="col-md-5">
+                        <label class="form-label">&nbsp;</label>
+                        <button class="btn btn-primary w-100" onclick="applyFilters()">
+                            <i class="fas fa-search me-2"></i>Search
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Students Table -->
+            <div class="content-card">
+                <h4><i class="fas fa-table me-2"></i>All Students</h4>
+                <div id="studentsList">
+                    <div class="loading-spinner">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-3">Loading students...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Dashboard Content End -->
+
+    <!-- View/Edit Student Modal -->
+    <div class="modal fade" id="studentModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="studentModalTitle">Student Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="studentProfileInfo">
+                        <!-- Profile info will be loaded here -->
+                    </div>
+                    <form id="editLevelForm" class="mt-4">
+                        <input type="hidden" id="editStudentId">
+                        <div class="mb-3">
+                            <label for="editStudentLevel" class="form-label">Current Level</label>
+                            <select class="form-select" id="editStudentLevel">
+                                <option value="BEGINNER">Beginner</option>
+                                <option value="INTERMEDIATE">Intermediate</option>
+                                <option value="ADVANCED">Advanced</option>
+                            </select>
+                        </div>
+                        <div id="editLevelError" class="alert alert-danger d-none"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveStudentLevel()">
+                        <i class="fas fa-save me-2"></i>Update Level
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this student account?</p>
+                    <p class="text-danger"><strong>Warning:</strong> This action cannot be undone. All enrollments will be removed.</p>
+                    <input type="hidden" id="deleteStudentId">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmDelete()">
+                        <i class="fas fa-trash me-2"></i>Delete Student
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Start -->
+    <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="text-white mb-4"><i class="fas fa-biohazard me-3"></i>SOP Dance</h4>
+                        <p>Join our vibrant dance community and discover your passion for movement.</p>
+                        <div class="d-flex align-items-center">
+                            <a class="btn-square btn btn-primary text-white rounded-circle me-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn-square btn btn-primary text-white rounded-circle me-2" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="btn-square btn btn-primary text-white rounded-circle me-2" href="#"><i class="fab fa-instagram"></i></a>
+                            <a class="btn-square btn btn-primary text-white rounded-circle me-0" href="#"><i class="fab fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="mb-4 text-white">Quick Links</h4>
+                        <a href="about.html"><i class="fas fa-angle-right me-2"></i> About</a>
+                        <a href="classes.html"><i class="fas fa-angle-right me-2"></i> Classes</a>
+                        <a href="event.html"><i class="fas fa-angle-right me-2"></i> Events</a>
+                        <a href="contact.html"><i class="fas fa-angle-right me-2"></i> Contact</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="mb-4 text-white">Contact Info</h4>
+                        <a href="#"><i class="fa fa-map-marker-alt me-2"></i> 123 Street, New York, USA</a>
+                        <a href="#"><i class="fas fa-envelope me-2"></i> info@example.com</a>
+                        <a href="#"><i class="fas fa-phone me-2"></i> +012 345 67890</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="mb-4 text-white">Opening Hours</h4>
+                        <div class="mb-3">
+                            <h6 class="text-muted mb-0">Mon - Friday:</h6>
+                            <p class="text-white mb-0">09.00 am to 07.00 pm</p>
+                        </div>
+                        <div class="mb-3">
+                            <h6 class="text-muted mb-0">Saturday:</h6>
+                            <p class="text-white mb-0">10.00 am to 05.00 pm</p>
+                        </div>
+                        <div class="mb-3">
+                            <h6 class="text-muted mb-0">Vacation:</h6>
+                            <p class="text-white mb-0">All Sunday is our vacation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Copyright Start -->
+    <div class="container-fluid copyright py-4">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-md-0">
+                    <span class="text-white"><a href="#"><i class="fas fa-copyright text-light me-2"></i>SOP Dance</a>, All right reserved.</span>
+                </div>
+                <div class="col-md-6 text-center text-md-end text-white">
+                    Designed by <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Copyright End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary btn-lg-square back-to-top"><i class="fa fa-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/counterup/counterup.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <!-- API & Auth Scripts -->
+    <script src="js/api-config.js"></script>
+    <script src="js/auth.js"></script>
+
+    <!-- Admin Students Script -->
+    <script>
+        // Require admin authentication
+        requireAdmin();
+
+        let allStudents = [];
+        let studentModal, deleteModal;
+
+        // Initialize modals
+        document.addEventListener('DOMContentLoaded', function() {
+            studentModal = new bootstrap.Modal(document.getElementById('studentModal'));
+            deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+
+            // Load students
+            loadStudents();
+
+            // Setup search listener
+            document.getElementById('searchInput').addEventListener('input', function() {
+                applyFilters();
+            });
+
+            document.getElementById('filterLevel').addEventListener('change', function() {
+                applyFilters();
+            });
+        });
+
+        // Load all students
+        async function loadStudents() {
+            try {
+                const response = await apiGet(`${API_BASE_URL}/users`);
+                allStudents = response.data || response || [];
+                displayStudents(allStudents);
+            } catch (error) {
+                console.error('Error loading students:', error);
+                document.getElementById('studentsList').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>Error loading students: ${error.message}</p>
+                        <button class="btn btn-primary" onclick="loadStudents()">Retry</button>
+                    </div>
+                `;
+            }
+        }
+
+        // Display students table
+        function displayStudents(students) {
+            const container = document.getElementById('studentsList');
+
+            if (students.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-users"></i>
+                        <p>No students found</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const tableHtml = `
+                <div class="table-responsive-custom">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Level</th>
+                                <th>Registered</th>
+                                <th>Classes</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${students.map(student => `
+                                <tr>
+                                    <td><strong>${student.name || 'N/A'}</strong></td>
+                                    <td>${student.email}</td>
+                                    <td>${student.phone || 'N/A'}</td>
+                                    <td>
+                                        <span class="badge bg-info">${student.level || 'BEGINNER'}</span>
+                                    </td>
+                                    <td>${formatDate(student.createdAt)}</td>
+                                    <td>${student.enrolledClassesCount || 0}</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-info text-white" onclick="viewStudentDetails(${student.id})">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-primary" onclick="editStudentLevel(${student.id})">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger" onclick="deleteStudent(${student.id})">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            container.innerHTML = tableHtml;
+        }
+
+        // Filter students
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const levelFilter = document.getElementById('filterLevel').value;
+
+            const filtered = allStudents.filter(student => {
+                const matchesSearch = !searchTerm ||
+                    (student.name && student.name.toLowerCase().includes(searchTerm)) ||
+                    student.email.toLowerCase().includes(searchTerm);
+
+                const matchesLevel = !levelFilter || (student.level === levelFilter);
+
+                return matchesSearch && matchesLevel;
+            });
+
+            displayStudents(filtered);
+        }
+
+        // View student details
+        function viewStudentDetails(id) {
+            const student = allStudents.find(s => s.id === id);
+            if (!student) return;
+
+            const profileHtml = `
+                <div class="profile-info">
+                    <p><strong>Name:</strong> ${student.name || 'N/A'}</p>
+                    <p><strong>Email:</strong> ${student.email}</p>
+                    <p><strong>Phone:</strong> ${student.phone || 'N/A'}</p>
+                    <p><strong>Level:</strong> <span class="badge bg-info">${student.level || 'BEGINNER'}</span></p>
+                    <p><strong>Registered:</strong> ${formatDate(student.createdAt)}</p>
+                    <p><strong>Classes Enrolled:</strong> ${student.enrolledClassesCount || 0}</p>
+                </div>
+            `;
+
+            document.getElementById('studentModalTitle').textContent = 'Student Profile - ' + (student.name || student.email);
+            document.getElementById('studentProfileInfo').innerHTML = profileHtml;
+            document.getElementById('editStudentId').value = student.id;
+            document.getElementById('editStudentLevel').value = student.level || 'BEGINNER';
+            document.getElementById('editLevelError').classList.add('d-none');
+
+            studentModal.show();
+        }
+
+        // Edit student level
+        function editStudentLevel(id) {
+            const student = allStudents.find(s => s.id === id);
+            if (!student) return;
+
+            viewStudentDetails(id);
+        }
+
+        // Save student level
+        async function saveStudentLevel() {
+            const studentId = document.getElementById('editStudentId').value;
+            const newLevel = document.getElementById('editStudentLevel').value;
+
+            try {
+                const saveBtn = event.target;
+                saveBtn.disabled = true;
+                saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Saving...';
+
+                await apiPut(`${API_BASE_URL}/users/${studentId}/level`, { level: newLevel });
+
+                studentModal.hide();
+                await loadStudents();
+                alert('Student level updated successfully!');
+            } catch (error) {
+                console.error('Error updating student level:', error);
+                const errorDiv = document.getElementById('editLevelError');
+                errorDiv.textContent = error.message || 'Failed to update level';
+                errorDiv.classList.remove('d-none');
+            } finally {
+                const saveBtn = event.target;
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = '<i class="fas fa-save me-2"></i>Update Level';
+            }
+        }
+
+        // Delete student
+        function deleteStudent(id) {
+            document.getElementById('deleteStudentId').value = id;
+            deleteModal.show();
+        }
+
+        // Confirm delete
+        async function confirmDelete() {
+            const studentId = document.getElementById('deleteStudentId').value;
+
+            try {
+                await apiDelete(`${API_BASE_URL}/users/${studentId}`);
+                deleteModal.hide();
+                await loadStudents();
+                alert('Student deleted successfully!');
+            } catch (error) {
+                console.error('Error deleting student:', error);
+                alert('Failed to delete student: ' + error.message);
+            }
+        }
+
+        // Helper function to format date
+        function formatDate(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+    </script>
+</body>
+
+</html>

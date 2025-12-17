@@ -1,146 +1,585 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>SOP - Dance Class Registration</title>
-  <link href="css/style2 .css" rel="stylesheet">
+    <meta charset="utf-8">
+    <title>Register - Dance Class</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Yantramanav:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .registration-header {
+            background: linear-gradient(135deg, var(--bs-primary) 0%, var(--bs-secondary) 100%);
+            padding: 80px 0 60px;
+            color: white;
+            text-align: center;
+        }
+
+        .registration-header h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .registration-header p {
+            font-size: 18px;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .registration-container {
+            padding: 60px 0;
+            background: #f8f9fa;
+        }
+
+        .registration-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+            padding: 50px;
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--bs-primary);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--bs-primary);
+        }
+
+        .section-title i {
+            margin-right: 10px;
+        }
+
+        .form-floating {
+            margin-bottom: 25px;
+        }
+
+        .form-floating input,
+        .form-floating select,
+        .form-floating textarea {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .form-floating input:focus,
+        .form-floating select:focus,
+        .form-floating textarea:focus {
+            border-color: var(--bs-primary);
+            box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.15);
+        }
+
+        .form-floating textarea {
+            min-height: 120px;
+        }
+
+        .password-requirements {
+            font-size: 13px;
+            color: #666;
+            margin-top: -15px;
+            margin-bottom: 25px;
+        }
+
+        .password-requirements li {
+            margin-bottom: 5px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            z-index: 10;
+        }
+
+        .info-box {
+            background: #f0f8ff;
+            border-left: 4px solid var(--bs-primary);
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+
+        .info-box i {
+            color: var(--bs-primary);
+            margin-right: 10px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            height: 60px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(var(--bs-primary-rgb), 0.3);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 15px;
+        }
+
+        .login-link a {
+            color: var(--bs-primary);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .alert {
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 25px;
+        }
+
+        @media (max-width: 768px) {
+            .registration-card {
+                padding: 30px 20px;
+            }
+
+            .registration-header h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-<form id="registration-form">
-    <h2>Register for Dance Classes</h2>
 
-    <label>Student Full Name</label>
-    <input type="text" name="name" required>
-
-    <label>Date of Birth</label>
-    <input type="date" name="dob" required>
-
-    <label>Gender</label>
-    <select name="gender" required>
-      <option value="">Select Gender</option>
-      <option value="Male">Male</option>
-      <option value="Female">Female</option>
-      <option value="Other">Other</option>
-    </select>
-
-    <label>Parent/Guardian Full Name</label>
-    <input type="text" name="guardian_name" required>
-
-    <label>Email</label>
-    <input type="email" name="email" required>
-
-    <label>Phone Number</label>
-    <input type="tel" name="phone" required>
-
-    <label>Address</label>
-    <textarea name="address" required></textarea>
-
-    <label>Emergency Contact Name</label>
-    <input type="text" name="emergency_contact" required>
-
-    <label>Relationship to Student</label>
-    <input type="text" name="relationship" required>
-
-    <label>Emergency Phone Number</label>
-    <input type="tel" name="emergency_phone" required>
-
-    <label>Preferred Dance Style</label>
-    <select name="dance_style" required>
-      <option value="Ballet">Ballet</option>
-      <option value="Jazz">Jazz</option>
-      <option value="Hip Hop">Hip Hop</option>
-      <option value="Contemporary">Contemporary</option>
-      <option value="Tap">Tap</option>
-      <option value="Other">Other</option>
-    </select>
-
-    <label>Level of Experience</label>
-    <select name="experience_level" required>
-      <option value="Beginner">Beginner</option>
-      <option value="Intermediate">Intermediate</option>
-      <option value="Advanced">Advanced</option>
-    </select>
-
-    <label>Preferred Class Day and Time</label>
-    <input type="datetime-local" name="class_time" required>
-
-    <label>Medical Conditions or Allergies</label>
-    <textarea name="medical" placeholder="List any medical conditions or allergies..."></textarea>
-
-    <label>How did you hear about us?</label>
-    <input type="text" name="referral">
-
-    <label>Terms and Conditions</label>
-    <textarea readonly>
-By submitting this form, I acknowledge that participation in dance classes involves physical activity and I hereby release the dance studio and its instructors from any liability for injuries or accidents that may occur during classes or events.
-    </textarea>
-
-    <label>Signature:</label>
-    <div class="signature-container">
-      <canvas id="signature-pad"></canvas>
-      <button type="button" onclick="clearSignature()">Clear Signature</button>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
     </div>
-    <input type="hidden" name="signature" id="signature-input">
+    <!-- Spinner End -->
 
-    <label>Date Signed</label>
-    <input type="date" name="date_signed" required>
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-secondary px-5 d-none d-lg-block">
+        <div class="row gx-0 align-items-center" style="height: 45px;">
+            <div class="col-lg-8 text-center text-lg-start mb-lg-0">
+                <div class="d-flex flex-wrap">
+                    <a href="#" class="text-light me-4"><i class="fas fa-map-marker-alt text-primary me-2"></i>Find A Location</a>
+                    <a href="#" class="text-light me-4"><i class="fas fa-phone-alt text-primary me-2"></i>+01234567890</a>
+                    <a href="#" class="text-light me-0"><i class="fas fa-envelope text-primary me-2"></i>Example@gmail.com</a>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center text-lg-end">
+                <div class="d-flex justify-content-end">
+                    <div class="border-end border-start py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-twitter"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
 
-    <input type="hidden" name="_next" value="https://yourdomain.com/payment">
-    <input type="hidden" name="_captcha" value="false">
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white px-4 px-lg-5 py-3 py-lg-0 sticky-top">
+        <a href="index.html" class="navbar-brand p-0">
+            <h1 class="text-primary m-0"><i class="fas fa-biohazard me-3"></i>SOP</h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="index.html" class="nav-item nav-link">Home</a>
+                <a href="about.html" class="nav-item nav-link">About</a>
+                <a href="classes.html" class="nav-item nav-link">Classes</a>
+                <a href="event.html" class="nav-item nav-link">Events</a>
+                <a href="contact.html" class="nav-item nav-link">Contact</a>
+            </div>
+            <a href="login.html" class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4 guest-only">Login</a>
+        </div>
+    </nav>
+    <!-- Navbar End -->
 
-    <button type="submit">Submit</button>
-  </form>
+    <!-- Page Header Start -->
+    <div class="registration-header">
+        <div class="container">
+            <h1>Join Our Dance Community</h1>
+            <p>Register now to access our dance classes, events, and more. Start your dance journey with us today!</p>
+        </div>
+    </div>
+    <!-- Page Header End -->
 
-  <!-- API Configuration -->
-  <script src="js/api-config.js"></script>
+    <!-- Registration Form Start -->
+    <div class="container-fluid registration-container">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="registration-card">
+                        <!-- Alert Container -->
+                        <div id="alertContainer"></div>
 
-  <script>
-  const form = document.getElementById("registration-form");
-  const canvas = document.getElementById("signature-pad");
-  const ctx = canvas.getContext("2d");
-  let drawing = false;
+                        <!-- Info Box -->
+                        <div class="info-box">
+                            <i class="fas fa-info-circle"></i>
+                            <strong>Note:</strong> All fields marked with * are required. Your information is secure and will only be used for class enrollment and communication purposes.
+                        </div>
 
-  canvas.addEventListener("mousedown", () => drawing = true);
-  canvas.addEventListener("mouseup", () => { drawing = false; ctx.beginPath(); });
-  canvas.addEventListener("mousemove", draw);
-  function draw(e) {
-    if (!drawing) return;
-    ctx.lineWidth = 2;
-    ctx.lineCap = "round";
-    ctx.strokeStyle = "#000";
-    ctx.lineTo(e.offsetX, e.offsetY);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(e.offsetX, e.offsetY);
-  }
-  function clearSignature() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-  }
+                        <!-- Registration Form -->
+                        <form id="registrationForm">
+                            <!-- Account Information Section -->
+                            <div class="section-title">
+                                <i class="fas fa-user-circle"></i>Account Information
+                            </div>
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const signatureData = canvas.toDataURL();
-    document.getElementById("signature-input").value = signatureData;
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Full Name" required>
+                                        <label for="name">Full Name *</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email Address" required>
+                                        <label for="email">Email Address *</label>
+                                    </div>
+                                </div>
+                            </div>
 
-    const formData = new FormData(form);
-    const data = {};
-    formData.forEach((value, key) => data[key] = value);
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating position-relative">
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required minlength="8">
+                                        <label for="password">Password *</label>
+                                        <span class="password-toggle" onclick="togglePassword('password', 'toggleIcon1')">
+                                            <i class="fas fa-eye" id="toggleIcon1"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating position-relative">
+                                        <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required minlength="8">
+                                        <label for="confirmPassword">Confirm Password *</label>
+                                        <span class="password-toggle" onclick="togglePassword('confirmPassword', 'toggleIcon2')">
+                                            <i class="fas fa-eye" id="toggleIcon2"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
 
-    try {
-      // Using API helper instead of raw fetch
-      const result = await apiPost(`${API_BASE_URL}/register`, data);
+                            <div class="password-requirements">
+                                <small>Password must be at least 8 characters long</small>
+                            </div>
 
-      if (result.url) {
-        window.location.href = result.url;
-      } else {
-        alert("Error initiating payment.");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Server error. Try again.");
-    }
-  });
-</script>
+                            <!-- Personal Information Section -->
+                            <div class="section-title mt-4">
+                                <i class="fas fa-id-card"></i>Personal Information
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="tel" class="form-control" id="phone" name="phone" placeholder="Phone Number" required>
+                                        <label for="phone">Phone Number *</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" placeholder="Date of Birth">
+                                        <label for="dateOfBirth">Date of Birth (Optional)</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-floating">
+                                <textarea class="form-control" id="address" name="address" placeholder="Address" style="height: 100px"></textarea>
+                                <label for="address">Address (Optional)</label>
+                            </div>
+
+                            <!-- Dance Information Section -->
+                            <div class="section-title mt-4">
+                                <i class="fas fa-music"></i>Dance Information
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-floating">
+                                        <select class="form-select" id="level" name="level" required>
+                                            <option value="">Select your level</option>
+                                            <option value="BEGINNER">Beginner - New to dance</option>
+                                            <option value="INTERMEDIATE">Intermediate - Some experience</option>
+                                            <option value="ADVANCED">Advanced - Experienced dancer</option>
+                                            <option value="PROFESSIONAL">Professional - Expert level</option>
+                                        </select>
+                                        <label for="level">Dance Experience Level *</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Guardian Information Section (Optional) -->
+                            <div class="section-title mt-4">
+                                <i class="fas fa-users"></i>Guardian & Emergency Information
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="guardianName" name="guardianName" placeholder="Guardian Name">
+                                        <label for="guardianName">Parent/Guardian Name (Optional)</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="tel" class="form-control" id="emergencyContact" name="emergencyContact" placeholder="Emergency Contact">
+                                        <label for="emergencyContact">Emergency Contact Number (Optional)</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-floating">
+                                <textarea class="form-control" id="medicalInfo" name="medicalInfo" placeholder="Medical Information" style="height: 100px"></textarea>
+                                <label for="medicalInfo">Medical Conditions or Allergies (Optional)</label>
+                            </div>
+
+                            <!-- Terms and Conditions -->
+                            <div class="form-check mb-4 mt-4">
+                                <input class="form-check-input" type="checkbox" id="terms" required>
+                                <label class="form-check-label" for="terms">
+                                    I agree to the <a href="#" class="text-primary">Terms and Conditions</a> and <a href="#" class="text-primary">Privacy Policy</a> *
+                                </label>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn btn-primary submit-btn">
+                                <i class="fas fa-user-plus me-2"></i>Create Account
+                            </button>
+                        </form>
+
+                        <!-- Login Link -->
+                        <div class="login-link">
+                            Already have an account? <a href="login.html">Login here</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Registration Form End -->
+
+    <!-- Footer Start -->
+    <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="text-white mb-4"><i class="fas fa-biohazard me-3"></i>SOP Dance</h4>
+                        <p>Join our vibrant dance community and discover your passion for movement.</p>
+                        <div class="d-flex align-items-center">
+                            <a class="btn-square btn btn-primary text-white rounded-circle me-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn-square btn btn-primary text-white rounded-circle me-2" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="btn-square btn btn-primary text-white rounded-circle me-2" href="#"><i class="fab fa-instagram"></i></a>
+                            <a class="btn-square btn btn-primary text-white rounded-circle me-0" href="#"><i class="fab fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="mb-4 text-white">Quick Links</h4>
+                        <a href="about.html"><i class="fas fa-angle-right me-2"></i> About</a>
+                        <a href="classes.html"><i class="fas fa-angle-right me-2"></i> Classes</a>
+                        <a href="event.html"><i class="fas fa-angle-right me-2"></i> Events</a>
+                        <a href="contact.html"><i class="fas fa-angle-right me-2"></i> Contact</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="mb-4 text-white">Contact Info</h4>
+                        <a href="#"><i class="fa fa-map-marker-alt me-2"></i> 123 Street, New York, USA</a>
+                        <a href="#"><i class="fas fa-envelope me-2"></i> info@example.com</a>
+                        <a href="#"><i class="fas fa-phone me-2"></i> +012 345 67890</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="mb-4 text-white">Opening Hours</h4>
+                        <div class="mb-3">
+                            <h6 class="text-muted mb-0">Mon - Friday:</h6>
+                            <p class="text-white mb-0">09.00 am to 07.00 pm</p>
+                        </div>
+                        <div class="mb-3">
+                            <h6 class="text-muted mb-0">Saturday:</h6>
+                            <p class="text-white mb-0">10.00 am to 05.00 pm</p>
+                        </div>
+                        <div class="mb-3">
+                            <h6 class="text-muted mb-0">Vacation:</h6>
+                            <p class="text-white mb-0">All Sunday is our vacation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Copyright Start -->
+    <div class="container-fluid copyright py-4">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-md-0">
+                    <span class="text-white"><a href="#"><i class="fas fa-copyright text-light me-2"></i>SOP Dance</a>, All right reserved.</span>
+                </div>
+                <div class="col-md-6 text-center text-md-end text-white">
+                    Designed by <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Copyright End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary btn-lg-square back-to-top"><i class="fa fa-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/counterup/counterup.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <!-- API & Auth Scripts -->
+    <script src="js/api-config.js"></script>
+    <script src="js/auth.js"></script>
+
+    <!-- Registration Page Script -->
+    <script>
+        // Password toggle function
+        function togglePassword(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Handle registration form submission
+        document.getElementById('registrationForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const alertContainer = document.getElementById('alertContainer');
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+
+            // Clear previous alerts
+            alertContainer.innerHTML = '';
+
+            // Get form values
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                showError('Passwords do not match. Please try again.', alertContainer);
+                return;
+            }
+
+            // Prepare registration data
+            const registrationData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                password: password,
+                phone: document.getElementById('phone').value,
+                level: document.getElementById('level').value,
+                dateOfBirth: document.getElementById('dateOfBirth').value || undefined,
+                address: document.getElementById('address').value || undefined,
+                guardianName: document.getElementById('guardianName').value || undefined,
+                emergencyContact: document.getElementById('emergencyContact').value || undefined,
+                medicalInfo: document.getElementById('medicalInfo').value || undefined
+            };
+
+            // Show loading state
+            setButtonLoading(submitBtn, true);
+
+            try {
+                // Call register function from auth.js
+                const response = await register(registrationData);
+
+                // Show success message
+                showSuccess('Registration successful! Redirecting to your dashboard...', alertContainer);
+
+                // Redirect to student dashboard after a short delay
+                setTimeout(() => {
+                    window.location.href = 'student-dashboard.html';
+                }, 1500);
+
+            } catch (error) {
+                // Show error message
+                const errorMessage = error.message || 'Registration failed. Please try again.';
+                showError(errorMessage, alertContainer);
+
+                // Reset button loading state
+                setButtonLoading(submitBtn, false);
+
+                // Scroll to top to show error
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        // Check if already logged in
+        if (isAuthenticated()) {
+            // Redirect to dashboard if already logged in
+            redirectToDashboard();
+        }
+    </script>
 </body>
+
 </html>

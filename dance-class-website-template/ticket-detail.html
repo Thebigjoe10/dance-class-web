@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Ticket Details - SOP Dance Class</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Yantramanav:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- QRCode.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <style>
+        .ticket-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 40px;
+            color: white;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .ticket-code {
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .qr-code-container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            display: inline-block;
+        }
+
+        .status-badge {
+            font-size: 1.1rem;
+            padding: 10px 20px;
+        }
+
+        @media print {
+            .no-print {
+                display: none;
+            }
+
+            .ticket-card {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-secondary px-5 d-none d-lg-block no-print">
+        <div class="row gx-0 align-items-center" style="height: 45px;">
+            <div class="col-lg-8 text-center text-lg-start mb-lg-0">
+                <div class="d-flex flex-wrap">
+                    <a href="#" class="text-light me-4"><i class="fas fa-map-marker-alt text-primary me-2"></i>Find A Location</a>
+                    <a href="#" class="text-light me-4"><i class="fas fa-phone-alt text-primary me-2"></i>+01234567890</a>
+                    <a href="#" class="text-light me-0"><i class="fas fa-envelope text-primary me-2"></i>Example@gmail.com</a>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center text-lg-end">
+                <div class="d-flex justify-content-end">
+                    <div class="border-end border-start py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-twitter"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Navbar Start -->
+    <div class="container-fluid position-relative p-0 no-print">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white px-4 px-lg-5 py-3 py-lg-0">
+            <a href="index.html" class="navbar-brand p-0">
+                <h1 class="text-primary m-0"><i class="fas fa-biohazard me-3"></i>SOP</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0">
+                    <a href="index.html" class="nav-item nav-link">Home</a>
+                    <a href="about.html" class="nav-item nav-link">About</a>
+                    <a href="event.html" class="nav-item nav-link active">Events</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="classes.html" class="dropdown-item">Our classes</a>
+                            <a href="training.html" class="dropdown-item">Dance Training</a>
+                            <a href="team.html" class="dropdown-item">Our Team</a>
+                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                            <a href="gallery.html" class="dropdown-item">Dance Gallery</a>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="nav-item nav-link">Contact Us</a>
+                </div>
+                <a href="registration.html" class="btn btn-primary rounded-pill text-white py-2 px-4 flex-wrap flex-sm-shrink-0">Register Now</a>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Header Start -->
+    <div class="container-fluid bg-breadcrumb no-print">
+        <div class="container text-center py-5" style="max-width: 900px;">
+            <h3 class="text-primary display-3 mb-4 wow fadeInDown" data-wow-delay="0.1s">Your Ticket</h3>
+            <ol class="breadcrumb justify-content-center text-white mb-0 wow fadeInDown" data-wow-delay="0.3s">
+                <li class="breadcrumb-item"><a href="index.html" class="text-dark">Home</a></li>
+                <li class="breadcrumb-item"><a href="event.html" class="text-dark">Events</a></li>
+                <li class="breadcrumb-item active text-primary">Ticket</li>
+            </ol>
+        </div>
+    </div>
+    <!-- Header End -->
+
+    <!-- Ticket Detail Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <!-- Loading State -->
+            <div id="loadingState" class="text-center py-5">
+                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-3 text-muted">Loading ticket details...</p>
+            </div>
+
+            <!-- Error State -->
+            <div id="errorState" class="alert alert-danger" role="alert" style="display: none;">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <span id="errorMessage"></span>
+                <div class="mt-3">
+                    <a href="event.html" class="btn btn-primary">Browse Events</a>
+                </div>
+            </div>
+
+            <!-- Ticket Content -->
+            <div id="ticketContent" style="display: none;">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <!-- Success Message -->
+                        <div class="alert alert-success alert-dismissible fade show mb-4 no-print" role="alert">
+                            <i class="fas fa-check-circle me-2"></i>
+                            <strong>Ticket Confirmed!</strong> Your ticket has been successfully purchased and sent to your email.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+
+                        <!-- Ticket Card -->
+                        <div class="ticket-card">
+                            <div class="text-center mb-4">
+                                <h2 class="mb-2">Event Ticket</h2>
+                                <p class="mb-0 opacity-75">Present this ticket at the venue</p>
+                            </div>
+
+                            <!-- Ticket Code -->
+                            <div class="ticket-code" id="ticketCode">
+                                LOADING...
+                            </div>
+
+                            <!-- Event Details -->
+                            <div class="row mt-4">
+                                <div class="col-md-8">
+                                    <h3 id="eventTitle" class="mb-3"></h3>
+                                    <div class="mb-2">
+                                        <i class="fas fa-calendar-alt me-2"></i>
+                                        <span id="eventDate"></span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <i class="fas fa-clock me-2"></i>
+                                        <span id="eventTime"></span>
+                                    </div>
+                                    <div class="mb-2">
+                                        <i class="fas fa-map-marker-alt me-2"></i>
+                                        <span id="eventVenue"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-center">
+                                    <div class="qr-code-container">
+                                        <div id="qrcode"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Buyer Info -->
+                            <hr class="my-4" style="border-color: rgba(255,255,255,0.3);">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p class="mb-1 opacity-75">Ticket Holder</p>
+                                    <h5 id="buyerName"></h5>
+                                </div>
+                                <div class="col-md-6">
+                                    <p class="mb-1 opacity-75">Purchase Date</p>
+                                    <h5 id="purchaseDate"></h5>
+                                </div>
+                            </div>
+
+                            <!-- Status Badge -->
+                            <div class="text-center mt-4">
+                                <span id="statusBadge" class="badge status-badge"></span>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="text-center mt-4 no-print">
+                            <button onclick="window.print()" class="btn btn-primary btn-lg rounded-pill me-2">
+                                <i class="fas fa-print me-2"></i>Print Ticket
+                            </button>
+                            <button onclick="downloadQRCode()" class="btn btn-outline-primary btn-lg rounded-pill">
+                                <i class="fas fa-download me-2"></i>Download QR Code
+                            </button>
+                        </div>
+
+                        <!-- Additional Info -->
+                        <div class="alert alert-info mt-4 no-print">
+                            <h5><i class="fas fa-info-circle me-2"></i>Important Information</h5>
+                            <ul class="mb-0">
+                                <li>Please bring this ticket (printed or on your mobile device) to the event</li>
+                                <li>The QR code will be scanned for entry verification</li>
+                                <li>Tickets are non-transferable and non-refundable</li>
+                                <li>Gates open 30 minutes before the event start time</li>
+                            </ul>
+                        </div>
+
+                        <!-- Back to Events -->
+                        <div class="text-center mt-4 no-print">
+                            <a href="event.html" class="btn btn-outline-secondary rounded-pill">
+                                <i class="fas fa-arrow-left me-2"></i>Browse More Events
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Ticket Detail End -->
+
+    <!-- Footer Start -->
+    <div class="container-fluid footer py-5 wow fadeIn no-print" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <div class="footer-item">
+                            <h4 class="text-white mb-4">SOP</h4>
+                            <p class="text-white mb-3">Dolor amet sit justo amet elitr clita ipsum elitr est.Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <div class="d-flex">
+                                <a class="btn btn-lg-square btn-primary rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-lg-square btn-primary rounded-circle mx-2" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-lg-square btn-primary rounded-circle mx-2" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-lg-square btn-primary rounded-circle mx-2" href=""><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="text-white mb-4">Quick Links</h4>
+                        <a href="about.html" class="footer-link"> About Us</a>
+                        <a href="classes.html" class="footer-link"> Classes</a>
+                        <a href="event.html" class="footer-link"> Events</a>
+                        <a href="contact.html" class="footer-link"> Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Copyright Start -->
+    <div class="container-fluid copyright py-4 no-print">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-md-0">
+                    <span class="text-white"><a href="#" class="border-bottom text-white"><i class="fas fa-copyright text-light me-2"></i>SOP</a>, All right reserved.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Copyright End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary btn-lg-square back-to-top no-print"><i class="fa fa-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+
+    <!-- API Configuration -->
+    <script src="js/api-config.js"></script>
+
+    <!-- Auth -->
+    <script src="js/auth.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <!-- Ticket Detail Script -->
+    <script>
+        let currentTicket = null;
+        let ticketId = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Get ticket ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            ticketId = urlParams.get('id');
+
+            if (!ticketId) {
+                showError('No ticket ID provided');
+                return;
+            }
+
+            await fetchTicketDetails();
+        });
+
+        async function fetchTicketDetails() {
+            const loadingEl = document.getElementById('loadingState');
+            const errorEl = document.getElementById('errorState');
+            const contentEl = document.getElementById('ticketContent');
+
+            try {
+                loadingEl.style.display = 'block';
+                errorEl.style.display = 'none';
+                contentEl.style.display = 'none';
+
+                const response = await apiGet(`${API_BASE_URL}/tickets/${ticketId}`);
+                currentTicket = response.ticket || response;
+
+                loadingEl.style.display = 'none';
+                contentEl.style.display = 'block';
+
+                displayTicketDetails();
+                generateQRCode();
+            } catch (error) {
+                console.error('Error fetching ticket details:', error);
+                loadingEl.style.display = 'none';
+                errorEl.style.display = 'block';
+                document.getElementById('errorMessage').textContent =
+                    error.message || 'Failed to load ticket details. Please try again later.';
+            }
+        }
+
+        function displayTicketDetails() {
+            // Set ticket code
+            document.getElementById('ticketCode').textContent = currentTicket.ticketCode || currentTicket.code;
+
+            // Set event details
+            const event = currentTicket.event || {};
+            document.getElementById('eventTitle').textContent = event.title || 'Event';
+
+            // Format and set date
+            if (event.date) {
+                const eventDate = new Date(event.date);
+                const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                document.getElementById('eventDate').textContent = eventDate.toLocaleDateString('en-US', dateOptions);
+            }
+
+            // Set time and venue
+            document.getElementById('eventTime').textContent = event.time || 'TBA';
+            document.getElementById('eventVenue').textContent = event.venue || 'TBA';
+
+            // Set buyer info
+            document.getElementById('buyerName').textContent = currentTicket.buyerName || currentTicket.name || 'N/A';
+
+            // Set purchase date
+            if (currentTicket.purchaseDate || currentTicket.createdAt) {
+                const purchaseDate = new Date(currentTicket.purchaseDate || currentTicket.createdAt);
+                const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+                document.getElementById('purchaseDate').textContent = purchaseDate.toLocaleDateString('en-US', dateOptions);
+            }
+
+            // Set status badge
+            const status = currentTicket.status || 'CONFIRMED';
+            const statusBadge = document.getElementById('statusBadge');
+            let badgeClass = 'bg-success';
+            let statusText = status;
+
+            switch (status.toUpperCase()) {
+                case 'CONFIRMED':
+                    badgeClass = 'bg-success';
+                    statusText = 'Confirmed';
+                    break;
+                case 'USED':
+                    badgeClass = 'bg-secondary';
+                    statusText = 'Used';
+                    break;
+                case 'CANCELLED':
+                    badgeClass = 'bg-danger';
+                    statusText = 'Cancelled';
+                    break;
+                case 'PENDING':
+                    badgeClass = 'bg-warning';
+                    statusText = 'Pending';
+                    break;
+            }
+
+            statusBadge.className = `badge status-badge ${badgeClass}`;
+            statusBadge.textContent = statusText;
+        }
+
+        function generateQRCode() {
+            const qrcodeContainer = document.getElementById('qrcode');
+            qrcodeContainer.innerHTML = ''; // Clear any existing QR code
+
+            const ticketCode = currentTicket.ticketCode || currentTicket.code;
+
+            // Generate QR code
+            new QRCode(qrcodeContainer, {
+                text: ticketCode,
+                width: 200,
+                height: 200,
+                colorDark: '#000000',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        function downloadQRCode() {
+            const qrcodeCanvas = document.querySelector('#qrcode canvas');
+            if (qrcodeCanvas) {
+                const url = qrcodeCanvas.toDataURL('image/png');
+                const link = document.createElement('a');
+                link.download = `ticket-${currentTicket.ticketCode || currentTicket.code}.png`;
+                link.href = url;
+                link.click();
+            }
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('errorState');
+            const loadingEl = document.getElementById('loadingState');
+
+            loadingEl.style.display = 'none';
+            errorEl.style.display = 'block';
+            document.getElementById('errorMessage').textContent = message;
+        }
+    </script>
+</body>
+
+</html>

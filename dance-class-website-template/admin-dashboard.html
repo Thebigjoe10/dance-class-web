@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Admin Dashboard - Dance Class</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Yantramanav:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .dashboard-header {
+            background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+            padding: 40px 0;
+            color: white;
+        }
+
+        .dashboard-header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-header p {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        .dashboard-container {
+            padding: 60px 0;
+            background: #f8f9fa;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .stat-card .icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card.students .icon {
+            background: rgba(13, 110, 253, 0.1);
+            color: #0d6efd;
+        }
+
+        .stat-card.classes .icon {
+            background: rgba(25, 135, 84, 0.1);
+            color: #198754;
+        }
+
+        .stat-card.events .icon {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+
+        .stat-card.tickets .icon {
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+        }
+
+        .stat-card h3 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .stat-card p {
+            color: #666;
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .stat-card .trend {
+            font-size: 13px;
+            margin-top: 10px;
+        }
+
+        .stat-card .trend.up {
+            color: #198754;
+        }
+
+        .stat-card .trend.down {
+            color: #dc3545;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .content-card h4 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .content-card h4 i {
+            margin-right: 10px;
+            color: var(--bs-primary);
+        }
+
+        .table-responsive {
+            margin-top: 20px;
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table thead th {
+            border-bottom: 2px solid #dee2e6;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .quick-action-card {
+            background: linear-gradient(135deg, var(--bs-primary) 0%, var(--bs-secondary) 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            color: white;
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        .quick-action-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            color: white;
+        }
+
+        .quick-action-card .icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .quick-action-card h5 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .quick-action-card p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        .quick-action-card.success {
+            background: linear-gradient(135deg, #198754 0%, #20c997 100%);
+        }
+
+        .quick-action-card.warning {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+        }
+
+        .quick-action-card.danger {
+            background: linear-gradient(135deg, #dc3545 0%, #e83e8c 100%);
+        }
+
+        .quick-action-card.info {
+            background: linear-gradient(135deg, #0dcaf0 0%, #6610f2 100%);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .badge {
+            font-size: 12px;
+            padding: 6px 12px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-header h1 {
+                font-size: 28px;
+            }
+
+            .stat-card {
+                padding: 20px;
+            }
+
+            .content-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-secondary px-5 d-none d-lg-block">
+        <div class="row gx-0 align-items-center" style="height: 45px;">
+            <div class="col-lg-8 text-center text-lg-start mb-lg-0">
+                <div class="d-flex flex-wrap">
+                    <a href="#" class="text-light me-4"><i class="fas fa-map-marker-alt text-primary me-2"></i>Find A Location</a>
+                    <a href="#" class="text-light me-4"><i class="fas fa-phone-alt text-primary me-2"></i>+01234567890</a>
+                    <a href="#" class="text-light me-0"><i class="fas fa-envelope text-primary me-2"></i>Example@gmail.com</a>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center text-lg-end">
+                <div class="d-flex justify-content-end">
+                    <div class="border-end border-start py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-twitter"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white px-4 px-lg-5 py-3 py-lg-0 sticky-top">
+        <a href="index.html" class="navbar-brand p-0">
+            <h1 class="text-primary m-0"><i class="fas fa-biohazard me-3"></i>SOP Admin</h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="index.html" class="nav-item nav-link">Home</a>
+                <a href="admin-dashboard.html" class="nav-item nav-link active">Dashboard</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Management</a>
+                    <div class="dropdown-menu m-0">
+                        <a href="#" class="dropdown-item">Manage Classes</a>
+                        <a href="#" class="dropdown-item">Manage Events</a>
+                        <a href="#" class="dropdown-item">Manage Students</a>
+                        <a href="#" class="dropdown-item">Verify Tickets</a>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4 logout-btn">
+                <i class="fas fa-sign-out-alt me-2"></i>Logout
+            </button>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Dashboard Header Start -->
+    <div class="dashboard-header">
+        <div class="container">
+            <h1>Admin Dashboard</h1>
+            <p>Manage your dance school efficiently</p>
+        </div>
+    </div>
+    <!-- Dashboard Header End -->
+
+    <!-- Dashboard Content Start -->
+    <div class="container-fluid dashboard-container">
+        <div class="container">
+            <!-- Statistics Cards -->
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-card students">
+                        <div class="icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 id="totalStudents">0</h3>
+                        <p>Total Students</p>
+                        <div class="trend up">
+                            <i class="fas fa-arrow-up me-1"></i>12% from last month
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-card classes">
+                        <div class="icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 id="totalClasses">0</h3>
+                        <p>Active Classes</p>
+                        <div class="trend up">
+                            <i class="fas fa-arrow-up me-1"></i>5% from last month
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-card events">
+                        <div class="icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3 id="totalEvents">0</h3>
+                        <p>Upcoming Events</p>
+                        <div class="trend">
+                            <i class="fas fa-minus me-1"></i>No change
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="stat-card tickets">
+                        <div class="icon">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                        <h3 id="totalTickets">0</h3>
+                        <p>Tickets Sold</p>
+                        <div class="trend up">
+                            <i class="fas fa-arrow-up me-1"></i>23% from last month
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="row">
+                <!-- Recent Registrations -->
+                <div class="col-lg-8">
+                    <div class="content-card">
+                        <h4><i class="fas fa-user-plus"></i>Recent Student Registrations</h4>
+                        <div id="recentRegistrations">
+                            <div class="loading-spinner">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                                <p class="mt-3">Loading recent registrations...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-card">
+                        <h4><i class="fas fa-chart-line"></i>System Overview</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <strong>Total Revenue (This Month)</strong>
+                                    <div class="h3 text-success mb-0">$0</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <strong>Active Enrollments</strong>
+                                    <div class="h3 text-primary mb-0" id="activeEnrollments">0</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <strong>Pending Verifications</strong>
+                                    <div class="h3 text-warning mb-0">0</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <strong>System Status</strong>
+                                    <div class="h3 text-success mb-0">
+                                        <i class="fas fa-check-circle"></i> Online
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="col-lg-4">
+                    <div class="content-card">
+                        <h4><i class="fas fa-bolt"></i>Quick Actions</h4>
+
+                        <a href="#" class="quick-action-card" onclick="manageClasses(event)">
+                            <div class="icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h5>Manage Classes</h5>
+                            <p>Add, edit, or remove classes</p>
+                        </a>
+
+                        <a href="#" class="quick-action-card success" onclick="manageEvents(event)">
+                            <div class="icon">
+                                <i class="fas fa-calendar-plus"></i>
+                            </div>
+                            <h5>Manage Events</h5>
+                            <p>Create and manage events</p>
+                        </a>
+
+                        <a href="#" class="quick-action-card warning" onclick="manageStudents(event)">
+                            <div class="icon">
+                                <i class="fas fa-users-cog"></i>
+                            </div>
+                            <h5>Manage Students</h5>
+                            <p>View and manage student accounts</p>
+                        </a>
+
+                        <a href="#" class="quick-action-card danger" onclick="verifyTickets(event)">
+                            <div class="icon">
+                                <i class="fas fa-qrcode"></i>
+                            </div>
+                            <h5>Verify Tickets</h5>
+                            <p>Scan and verify event tickets</p>
+                        </a>
+
+                        <a href="#" class="quick-action-card info" onclick="viewReports(event)">
+                            <div class="icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
+                            <h5>View Reports</h5>
+                            <p>Analytics and reports</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Dashboard Content End -->
+
+    <!-- Footer Start -->
+    <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="text-white mb-4"><i class="fas fa-biohazard me-3"></i>SOP Dance</h4>
+                        <p>Join our vibrant dance community and discover your passion for movement.</p>
+                        <div class="d-flex align-items-center">
+                            <a class="btn-square btn btn-primary text-white rounded-circle me-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn-square btn btn-primary text-white rounded-circle me-2" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="btn-square btn btn-primary text-white rounded-circle me-2" href="#"><i class="fab fa-instagram"></i></a>
+                            <a class="btn-square btn btn-primary text-white rounded-circle me-0" href="#"><i class="fab fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="mb-4 text-white">Quick Links</h4>
+                        <a href="about.html"><i class="fas fa-angle-right me-2"></i> About</a>
+                        <a href="classes.html"><i class="fas fa-angle-right me-2"></i> Classes</a>
+                        <a href="event.html"><i class="fas fa-angle-right me-2"></i> Events</a>
+                        <a href="contact.html"><i class="fas fa-angle-right me-2"></i> Contact</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="mb-4 text-white">Contact Info</h4>
+                        <a href="#"><i class="fa fa-map-marker-alt me-2"></i> 123 Street, New York, USA</a>
+                        <a href="#"><i class="fas fa-envelope me-2"></i> info@example.com</a>
+                        <a href="#"><i class="fas fa-phone me-2"></i> +012 345 67890</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="mb-4 text-white">Opening Hours</h4>
+                        <div class="mb-3">
+                            <h6 class="text-muted mb-0">Mon - Friday:</h6>
+                            <p class="text-white mb-0">09.00 am to 07.00 pm</p>
+                        </div>
+                        <div class="mb-3">
+                            <h6 class="text-muted mb-0">Saturday:</h6>
+                            <p class="text-white mb-0">10.00 am to 05.00 pm</p>
+                        </div>
+                        <div class="mb-3">
+                            <h6 class="text-muted mb-0">Vacation:</h6>
+                            <p class="text-white mb-0">All Sunday is our vacation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Copyright Start -->
+    <div class="container-fluid copyright py-4">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-md-0">
+                    <span class="text-white"><a href="#"><i class="fas fa-copyright text-light me-2"></i>SOP Dance</a>, All right reserved.</span>
+                </div>
+                <div class="col-md-6 text-center text-md-end text-white">
+                    Designed by <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Copyright End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary btn-lg-square back-to-top"><i class="fa fa-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/counterup/counterup.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <!-- API & Auth Scripts -->
+    <script src="js/api-config.js"></script>
+    <script src="js/auth.js"></script>
+
+    <!-- Admin Dashboard Script -->
+    <script>
+        // Require admin authentication
+        requireAdmin();
+
+        // Dashboard data
+        let students = [];
+        let classes = [];
+        let events = [];
+        let tickets = [];
+
+        // Load dashboard data
+        async function loadDashboardData() {
+            try {
+                // Load all data in parallel
+                await Promise.all([
+                    loadStudents(),
+                    loadClasses(),
+                    loadEvents(),
+                    loadTickets()
+                ]);
+
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+            }
+        }
+
+        // Load students
+        async function loadStudents() {
+            try {
+                const response = await apiGet(`${API_BASE_URL}/users`);
+                students = response.data || response || [];
+
+                // Update count
+                document.getElementById('totalStudents').textContent = students.length;
+
+                // Display recent registrations
+                displayRecentRegistrations(students.slice(0, 5));
+
+            } catch (error) {
+                console.error('Error loading students:', error);
+                document.getElementById('recentRegistrations').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>Error loading student data</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Load classes
+        async function loadClasses() {
+            try {
+                const response = await apiGet(`${API_BASE_URL}/classes`);
+                classes = response.data || response || [];
+
+                // Update count
+                document.getElementById('totalClasses').textContent = classes.length;
+
+                // Calculate total enrollments
+                const totalEnrollments = classes.reduce((sum, cls) => {
+                    return sum + (cls.currentEnrollment || 0);
+                }, 0);
+                document.getElementById('activeEnrollments').textContent = totalEnrollments;
+
+            } catch (error) {
+                console.error('Error loading classes:', error);
+            }
+        }
+
+        // Load events
+        async function loadEvents() {
+            try {
+                const response = await apiGet(`${API_BASE_URL}/events`);
+                events = response.data || response || [];
+
+                // Update count
+                document.getElementById('totalEvents').textContent = events.length;
+
+            } catch (error) {
+                console.error('Error loading events:', error);
+            }
+        }
+
+        // Load tickets
+        async function loadTickets() {
+            try {
+                // Admin endpoint to get all tickets
+                const response = await apiGet(`${API_BASE_URL}/tickets`);
+                tickets = response.data || response || [];
+
+                // Update count
+                document.getElementById('totalTickets').textContent = tickets.length;
+
+            } catch (error) {
+                console.error('Error loading tickets:', error);
+                // If endpoint doesn't exist, use a default value
+                document.getElementById('totalTickets').textContent = '0';
+            }
+        }
+
+        // Display recent registrations
+        function displayRecentRegistrations(recentStudents) {
+            const container = document.getElementById('recentRegistrations');
+
+            if (recentStudents.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-users"></i>
+                        <p>No student registrations yet</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = `
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Level</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${recentStudents.map(student => `
+                                <tr>
+                                    <td><strong>${student.name}</strong></td>
+                                    <td>${student.email}</td>
+                                    <td><span class="badge bg-primary">${student.level || 'N/A'}</span></td>
+                                    <td>${student.phone || 'N/A'}</td>
+                                    <td><span class="badge bg-success">Active</span></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+        }
+
+        // Quick action functions
+        function manageClasses(e) {
+            e.preventDefault();
+            alert('Class management interface will be implemented.\n\nFeatures:\n- Add new classes\n- Edit existing classes\n- Delete classes\n- View enrollments');
+        }
+
+        function manageEvents(e) {
+            e.preventDefault();
+            alert('Event management interface will be implemented.\n\nFeatures:\n- Create new events\n- Edit event details\n- Cancel events\n- View ticket sales');
+        }
+
+        function manageStudents(e) {
+            e.preventDefault();
+            alert('Student management interface will be implemented.\n\nFeatures:\n- View all students\n- Edit student profiles\n- Deactivate accounts\n- View enrollment history');
+        }
+
+        function verifyTickets(e) {
+            e.preventDefault();
+            const ticketCode = prompt('Enter ticket code to verify:');
+            if (ticketCode) {
+                verifyTicketCode(ticketCode);
+            }
+        }
+
+        async function verifyTicketCode(code) {
+            try {
+                const response = await apiGet(`${API_BASE_URL}/tickets/verify/${code}`);
+                alert(`Ticket Verified!\n\nEvent: ${response.event?.title || 'N/A'}\nStatus: ${response.status}\nHolder: ${response.user?.name || 'N/A'}`);
+            } catch (error) {
+                alert('Ticket verification failed: ' + (error.message || 'Invalid ticket code'));
+            }
+        }
+
+        function viewReports(e) {
+            e.preventDefault();
+            alert('Reports and analytics interface will be implemented.\n\nFeatures:\n- Revenue reports\n- Attendance statistics\n- Popular classes\n- Student demographics');
+        }
+
+        // Load data on page load
+        loadDashboardData();
+    </script>
+</body>
+
+</html>

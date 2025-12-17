@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Event Details - SOP Dance Class</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Yantramanav:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-secondary px-5 d-none d-lg-block">
+        <div class="row gx-0 align-items-center" style="height: 45px;">
+            <div class="col-lg-8 text-center text-lg-start mb-lg-0">
+                <div class="d-flex flex-wrap">
+                    <a href="#" class="text-light me-4"><i class="fas fa-map-marker-alt text-primary me-2"></i>Find A Location</a>
+                    <a href="#" class="text-light me-4"><i class="fas fa-phone-alt text-primary me-2"></i>+01234567890</a>
+                    <a href="#" class="text-light me-0"><i class="fas fa-envelope text-primary me-2"></i>Example@gmail.com</a>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center text-lg-end">
+                <div class="d-flex justify-content-end">
+                    <div class="border-end border-start py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-twitter"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Navbar Start -->
+    <div class="container-fluid position-relative p-0">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white px-4 px-lg-5 py-3 py-lg-0">
+            <a href="index.html" class="navbar-brand p-0">
+                <h1 class="text-primary m-0"><i class="fas fa-biohazard me-3"></i>SOP</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0">
+                    <a href="index.html" class="nav-item nav-link">Home</a>
+                    <a href="about.html" class="nav-item nav-link">About</a>
+                    <a href="event.html" class="nav-item nav-link active">Events</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="classes.html" class="dropdown-item">Our classes</a>
+                            <a href="training.html" class="dropdown-item">Dance Training</a>
+                            <a href="team.html" class="dropdown-item">Our Team</a>
+                            <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                            <a href="gallery.html" class="dropdown-item">Dance Gallery</a>
+                        </div>
+                    </div>
+                    <a href="contact.html" class="nav-item nav-link">Contact Us</a>
+                </div>
+                <a href="registration.html" class="btn btn-primary rounded-pill text-white py-2 px-4 flex-wrap flex-sm-shrink-0">Register Now</a>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Header Start -->
+    <div class="container-fluid bg-breadcrumb">
+        <div class="container text-center py-5" style="max-width: 900px;">
+            <h3 class="text-primary display-3 mb-4 wow fadeInDown" data-wow-delay="0.1s" id="pageTitle">Event Details</h3>
+            <ol class="breadcrumb justify-content-center text-white mb-0 wow fadeInDown" data-wow-delay="0.3s">
+                <li class="breadcrumb-item"><a href="index.html" class="text-dark">Home</a></li>
+                <li class="breadcrumb-item"><a href="event.html" class="text-dark">Events</a></li>
+                <li class="breadcrumb-item active text-primary">Details</li>
+            </ol>
+        </div>
+    </div>
+    <!-- Header End -->
+
+    <!-- Event Detail Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <!-- Loading State -->
+            <div id="loadingState" class="text-center py-5">
+                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-3 text-muted">Loading event details...</p>
+            </div>
+
+            <!-- Error State -->
+            <div id="errorState" class="alert alert-danger" role="alert" style="display: none;">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <span id="errorMessage"></span>
+                <div class="mt-3">
+                    <a href="event.html" class="btn btn-primary">Back to Events</a>
+                </div>
+            </div>
+
+            <!-- Event Details -->
+            <div id="eventContent" style="display: none;">
+                <div class="row g-5">
+                    <!-- Event Image -->
+                    <div class="col-lg-6">
+                        <div class="position-relative rounded overflow-hidden">
+                            <img id="eventImage" src="img/service-1.jpg" class="img-fluid w-100 rounded" alt="Event Image" style="max-height: 500px; object-fit: cover;">
+                            <div id="soldOutBadge" class="position-absolute top-0 start-0 m-3" style="display: none;">
+                                <span class="badge bg-danger fs-5 px-4 py-2">SOLD OUT</span>
+                            </div>
+                        </div>
+
+                        <!-- Quick Info Card -->
+                        <div class="bg-light rounded p-4 mt-4">
+                            <h4 class="mb-3">Event Information</h4>
+                            <div class="d-flex align-items-start mb-3">
+                                <i class="fas fa-calendar-alt text-primary fa-2x me-3 mt-1"></i>
+                                <div>
+                                    <h6 class="mb-0">Date</h6>
+                                    <p id="eventDate" class="mb-0"></p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start mb-3">
+                                <i class="fas fa-clock text-primary fa-2x me-3 mt-1"></i>
+                                <div>
+                                    <h6 class="mb-0">Time</h6>
+                                    <p id="eventTime" class="mb-0"></p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start mb-3">
+                                <i class="fas fa-map-marker-alt text-primary fa-2x me-3 mt-1"></i>
+                                <div>
+                                    <h6 class="mb-0">Venue</h6>
+                                    <p id="eventVenue" class="mb-0"></p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start mb-3">
+                                <i class="fas fa-dollar-sign text-primary fa-2x me-3 mt-1"></i>
+                                <div>
+                                    <h6 class="mb-0">Ticket Price</h6>
+                                    <p id="eventPrice" class="mb-0 text-primary fw-bold fs-5"></p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-start">
+                                <i class="fas fa-ticket-alt text-primary fa-2x me-3 mt-1"></i>
+                                <div>
+                                    <h6 class="mb-0">Tickets Remaining</h6>
+                                    <p id="ticketsRemaining" class="mb-0"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Event Details -->
+                    <div class="col-lg-6">
+                        <h1 id="eventTitle" class="display-5 mb-4"></h1>
+
+                        <div class="mb-4">
+                            <h4 class="mb-3">About This Event</h4>
+                            <p id="eventDescription" class="text-muted"></p>
+                        </div>
+
+                        <div id="ticketSection" class="mt-5">
+                            <h4 class="mb-3">Get Your Tickets</h4>
+                            <div class="bg-light rounded p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div>
+                                        <h5 class="mb-1">Standard Ticket</h5>
+                                        <p id="ticketPriceText" class="mb-0 text-muted"></p>
+                                    </div>
+                                    <div class="text-end">
+                                        <p id="ticketPriceAmount" class="h3 mb-0 text-primary"></p>
+                                    </div>
+                                </div>
+                                <button id="buyTicketButton" class="btn btn-primary btn-lg rounded-pill w-100 mt-3">
+                                    <i class="fas fa-ticket-alt me-2"></i>Buy Ticket
+                                </button>
+                                <p class="text-muted text-center mb-0 mt-3 small">
+                                    <i class="fas fa-shield-alt me-2"></i>Secure payment via Paystack
+                                </p>
+                            </div>
+                        </div>
+
+                        <div id="soldOutSection" style="display: none;" class="mt-5">
+                            <div class="alert alert-danger d-flex align-items-center">
+                                <i class="fas fa-times-circle me-3 fa-3x"></i>
+                                <div>
+                                    <h5 class="mb-1">This event is sold out</h5>
+                                    <p class="mb-0">All tickets have been sold. Please check our other upcoming events.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Back Button -->
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <a href="event.html" class="btn btn-outline-primary rounded-pill px-4">
+                            <i class="fas fa-arrow-left me-2"></i>Back to Events
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Event Detail End -->
+
+    <!-- Footer Start -->
+    <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <div class="footer-item">
+                            <h4 class="text-white mb-4">SOP</h4>
+                            <p class="text-white mb-3">Dolor amet sit justo amet elitr clita ipsum elitr est.Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                            <div class="d-flex">
+                                <a class="btn btn-lg-square btn-primary rounded-circle me-2" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-lg-square btn-primary rounded-circle mx-2" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-lg-square btn-primary rounded-circle mx-2" href=""><i class="fab fa-instagram"></i></a>
+                                <a class="btn btn-lg-square btn-primary rounded-circle mx-2" href=""><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="text-white mb-4">Quick Links</h4>
+                        <a href="about.html" class="footer-link"> About Us</a>
+                        <a href="classes.html" class="footer-link"> Classes</a>
+                        <a href="event.html" class="footer-link"> Events</a>
+                        <a href="contact.html" class="footer-link"> Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Copyright Start -->
+    <div class="container-fluid copyright py-4">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-md-0">
+                    <span class="text-white"><a href="#" class="border-bottom text-white"><i class="fas fa-copyright text-light me-2"></i>SOP</a>, All right reserved.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Copyright End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary btn-lg-square back-to-top"><i class="fa fa-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+
+    <!-- API Configuration -->
+    <script src="js/api-config.js"></script>
+
+    <!-- Auth -->
+    <script src="js/auth.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <!-- Event Detail Script -->
+    <script>
+        let currentEvent = null;
+        let eventId = null;
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Get event ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            eventId = urlParams.get('id');
+
+            if (!eventId) {
+                showError('No event ID provided');
+                return;
+            }
+
+            await fetchEventDetails();
+        });
+
+        async function fetchEventDetails() {
+            const loadingEl = document.getElementById('loadingState');
+            const errorEl = document.getElementById('errorState');
+            const contentEl = document.getElementById('eventContent');
+
+            try {
+                loadingEl.style.display = 'block';
+                errorEl.style.display = 'none';
+                contentEl.style.display = 'none';
+
+                const response = await apiGet(`${API_BASE_URL}/events/${eventId}`);
+                currentEvent = response.event || response;
+
+                loadingEl.style.display = 'none';
+                contentEl.style.display = 'block';
+
+                displayEventDetails();
+            } catch (error) {
+                console.error('Error fetching event details:', error);
+                loadingEl.style.display = 'none';
+                errorEl.style.display = 'block';
+                document.getElementById('errorMessage').textContent =
+                    error.message || 'Failed to load event details. Please try again later.';
+            }
+        }
+
+        function displayEventDetails() {
+            // Set page title
+            document.getElementById('pageTitle').textContent = currentEvent.title;
+            document.title = `${currentEvent.title} - SOP Dance Class`;
+
+            // Set event details
+            document.getElementById('eventTitle').textContent = currentEvent.title;
+            document.getElementById('eventDescription').textContent = currentEvent.description || 'No description available.';
+
+            // Format and set date
+            const eventDate = new Date(currentEvent.date);
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('eventDate').textContent = eventDate.toLocaleDateString('en-US', dateOptions);
+
+            // Set time
+            document.getElementById('eventTime').textContent = currentEvent.time || 'TBA';
+
+            // Set venue
+            document.getElementById('eventVenue').textContent = currentEvent.venue || 'TBA';
+
+            // Set price
+            const price = currentEvent.price ? `$${currentEvent.price}` : 'Free';
+            document.getElementById('eventPrice').textContent = price;
+            document.getElementById('ticketPriceText').textContent = currentEvent.price ? 'General Admission' : 'Free Entry';
+            document.getElementById('ticketPriceAmount').textContent = price;
+
+            // Calculate and set remaining tickets
+            const capacity = currentEvent.capacity || 0;
+            const sold = currentEvent.ticketsSold || 0;
+            const remaining = capacity - sold;
+            const isSoldOut = remaining <= 0;
+
+            document.getElementById('ticketsRemaining').textContent = isSoldOut ? '0 (Sold Out)' : `${remaining} of ${capacity}`;
+
+            // Set image
+            const imgIndex = (Math.floor(Math.random() * 4)) + 1;
+            document.getElementById('eventImage').src = currentEvent.imageUrl || `img/service-${imgIndex}.jpg`;
+
+            // Handle sold out state
+            if (isSoldOut) {
+                document.getElementById('soldOutBadge').style.display = 'block';
+                document.getElementById('ticketSection').style.display = 'none';
+                document.getElementById('soldOutSection').style.display = 'block';
+            } else {
+                document.getElementById('soldOutBadge').style.display = 'none';
+                document.getElementById('ticketSection').style.display = 'block';
+                document.getElementById('soldOutSection').style.display = 'none';
+
+                // Add event listener to buy ticket button
+                document.getElementById('buyTicketButton').addEventListener('click', handleBuyTicket);
+
+                // Show warning if low on tickets
+                if (remaining <= 10) {
+                    const warningHtml = `<p class="text-warning text-center mb-0 mt-2"><i class="fas fa-exclamation-triangle me-2"></i>Only ${remaining} tickets left!</p>`;
+                    document.getElementById('ticketSection').querySelector('.bg-light').insertAdjacentHTML('beforeend', warningHtml);
+                }
+            }
+        }
+
+        function handleBuyTicket() {
+            // Redirect to checkout page
+            window.location.href = `checkout.html?eventId=${eventId}`;
+        }
+
+        function showError(message) {
+            const errorEl = document.getElementById('errorState');
+            const loadingEl = document.getElementById('loadingState');
+
+            loadingEl.style.display = 'none';
+            errorEl.style.display = 'block';
+            document.getElementById('errorMessage').textContent = message;
+        }
+    </script>
+</body>
+
+</html>
