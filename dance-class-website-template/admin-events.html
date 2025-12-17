@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Manage Events - Admin Dashboard</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Yantramanav:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .dashboard-header {
+            background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+            padding: 40px 0;
+            color: white;
+        }
+
+        .dashboard-header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-header p {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+
+        .dashboard-container {
+            padding: 60px 0;
+            background: #f8f9fa;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .content-card h4 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .table-responsive-custom {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .table {
+            margin-bottom: 0;
+            font-size: 14px;
+        }
+
+        .table thead th {
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f0f0 100%);
+            border-color: #e0e0e0;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .table tbody tr {
+            border-color: #f0f0f0;
+        }
+
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .action-buttons .btn {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+
+        .loading-spinner {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+
+        .empty-state i {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .search-filter-bar {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+            color: white;
+        }
+
+        .modal-header .btn-close {
+            filter: brightness(0) invert(1);
+        }
+
+        .badge {
+            font-size: 12px;
+            padding: 6px 12px;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-header h1 {
+                font-size: 28px;
+            }
+
+            .content-card {
+                padding: 20px;
+            }
+
+            .action-buttons {
+                justify-content: stretch;
+            }
+
+            .action-buttons button {
+                flex: 1;
+            }
+
+            .table {
+                font-size: 12px;
+            }
+
+            .action-buttons .btn {
+                padding: 4px 8px;
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-secondary px-5 d-none d-lg-block">
+        <div class="row gx-0 align-items-center" style="height: 45px;">
+            <div class="col-lg-8 text-center text-lg-start mb-lg-0">
+                <div class="d-flex flex-wrap">
+                    <a href="#" class="text-light me-4"><i class="fas fa-map-marker-alt text-primary me-2"></i>Find A Location</a>
+                    <a href="#" class="text-light me-4"><i class="fas fa-phone-alt text-primary me-2"></i>+01234567890</a>
+                    <a href="#" class="text-light me-0"><i class="fas fa-envelope text-primary me-2"></i>Example@gmail.com</a>
+                </div>
+            </div>
+            <div class="col-lg-4 text-center text-lg-end">
+                <div class="d-flex justify-content-end">
+                    <div class="border-end border-start py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-twitter"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-instagram"></i></a>
+                    </div>
+                    <div class="border-end py-1">
+                        <a href="#" class="btn text-primary"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white px-4 px-lg-5 py-3 py-lg-0 sticky-top">
+        <a href="index.html" class="navbar-brand p-0">
+            <h1 class="text-primary m-0"><i class="fas fa-biohazard me-3"></i>SOP Admin</h1>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="index.html" class="nav-item nav-link">Home</a>
+                <a href="admin-dashboard.html" class="nav-item nav-link">Dashboard</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown">Management</a>
+                    <div class="dropdown-menu m-0">
+                        <a href="admin-classes.html" class="dropdown-item">Manage Classes</a>
+                        <a href="admin-events.html" class="dropdown-item active">Manage Events</a>
+                        <a href="admin-students.html" class="dropdown-item">Manage Students</a>
+                        <a href="admin-verify-ticket.html" class="dropdown-item">Verify Tickets</a>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4 logout-btn">
+                <i class="fas fa-sign-out-alt me-2"></i>Logout
+            </button>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Dashboard Header Start -->
+    <div class="dashboard-header">
+        <div class="container">
+            <h1><i class="fas fa-calendar-alt me-3"></i>Manage Events</h1>
+            <p>Add, edit, and manage events and tickets</p>
+        </div>
+    </div>
+    <!-- Dashboard Header End -->
+
+    <!-- Dashboard Content Start -->
+    <div class="container-fluid dashboard-container">
+        <div class="container">
+            <!-- Search and Filter Bar -->
+            <div class="search-filter-bar">
+                <div class="row align-items-end">
+                    <div class="col-md-6">
+                        <label for="searchInput" class="form-label">Search Events</label>
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search by event name or venue...">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="filterStatus" class="form-label">Status</label>
+                        <select class="form-select" id="filterStatus">
+                            <option value="">All Status</option>
+                            <option value="upcoming">Upcoming</option>
+                            <option value="ongoing">Ongoing</option>
+                            <option value="completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button class="btn btn-primary w-100" onclick="openAddEventModal()">
+                            <i class="fas fa-plus me-2"></i>Add Event
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events Table -->
+            <div class="content-card">
+                <h4><i class="fas fa-table me-2"></i>All Events</h4>
+                <div id="eventsList">
+                    <div class="loading-spinner">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-3">Loading events...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Dashboard Content End -->
+
+    <!-- Add/Edit Event Modal -->
+    <div class="modal fade" id="eventModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eventModalTitle">Add New Event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="eventForm">
+                        <input type="hidden" id="eventId">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="eventTitle" class="form-label">Event Title *</label>
+                                <input type="text" class="form-control" id="eventTitle" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="eventVenue" class="form-label">Venue *</label>
+                                <input type="text" class="form-control" id="eventVenue" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="eventDate" class="form-label">Date *</label>
+                                <input type="date" class="form-control" id="eventDate" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="eventTime" class="form-label">Time *</label>
+                                <input type="time" class="form-control" id="eventTime" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="eventCapacity" class="form-label">Capacity *</label>
+                                <input type="number" class="form-control" id="eventCapacity" min="1" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="eventPrice" class="form-label">Price *</label>
+                                <input type="number" class="form-control" id="eventPrice" step="0.01" min="0" required>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="eventDescription" class="form-label">Description</label>
+                                <textarea class="form-control" id="eventDescription" rows="3"></textarea>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="eventImageUrl" class="form-label">Image URL</label>
+                                <input type="url" class="form-control" id="eventImageUrl" placeholder="https://example.com/image.jpg">
+                            </div>
+                        </div>
+                        <div id="eventFormError" class="alert alert-danger d-none"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveEvent()">
+                        <i class="fas fa-save me-2"></i>Save Event
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this event?</p>
+                    <p class="text-danger"><strong>Warning:</strong> This action cannot be undone. All tickets will be invalidated.</p>
+                    <input type="hidden" id="deleteEventId">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmDelete()">
+                        <i class="fas fa-trash me-2"></i>Delete Event
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Start -->
+    <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="text-white mb-4"><i class="fas fa-biohazard me-3"></i>SOP Dance</h4>
+                        <p>Join our vibrant dance community and discover your passion for movement.</p>
+                        <div class="d-flex align-items-center">
+                            <a class="btn-square btn btn-primary text-white rounded-circle me-2" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn-square btn btn-primary text-white rounded-circle me-2" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="btn-square btn btn-primary text-white rounded-circle me-2" href="#"><i class="fab fa-instagram"></i></a>
+                            <a class="btn-square btn btn-primary text-white rounded-circle me-0" href="#"><i class="fab fa-tiktok"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="mb-4 text-white">Quick Links</h4>
+                        <a href="about.html"><i class="fas fa-angle-right me-2"></i> About</a>
+                        <a href="classes.html"><i class="fas fa-angle-right me-2"></i> Classes</a>
+                        <a href="event.html"><i class="fas fa-angle-right me-2"></i> Events</a>
+                        <a href="contact.html"><i class="fas fa-angle-right me-2"></i> Contact</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="mb-4 text-white">Contact Info</h4>
+                        <a href="#"><i class="fa fa-map-marker-alt me-2"></i> 123 Street, New York, USA</a>
+                        <a href="#"><i class="fas fa-envelope me-2"></i> info@example.com</a>
+                        <a href="#"><i class="fas fa-phone me-2"></i> +012 345 67890</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-xl-3">
+                    <div class="footer-item d-flex flex-column">
+                        <h4 class="mb-4 text-white">Opening Hours</h4>
+                        <div class="mb-3">
+                            <h6 class="text-muted mb-0">Mon - Friday:</h6>
+                            <p class="text-white mb-0">09.00 am to 07.00 pm</p>
+                        </div>
+                        <div class="mb-3">
+                            <h6 class="text-muted mb-0">Saturday:</h6>
+                            <p class="text-white mb-0">10.00 am to 05.00 pm</p>
+                        </div>
+                        <div class="mb-3">
+                            <h6 class="text-muted mb-0">Vacation:</h6>
+                            <p class="text-white mb-0">All Sunday is our vacation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Copyright Start -->
+    <div class="container-fluid copyright py-4">
+        <div class="container">
+            <div class="row g-4 align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-md-0">
+                    <span class="text-white"><a href="#"><i class="fas fa-copyright text-light me-2"></i>SOP Dance</a>, All right reserved.</span>
+                </div>
+                <div class="col-md-6 text-center text-md-end text-white">
+                    Designed by <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Copyright End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary btn-lg-square back-to-top"><i class="fa fa-arrow-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/counterup/counterup.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <!-- API & Auth Scripts -->
+    <script src="js/api-config.js"></script>
+    <script src="js/auth.js"></script>
+
+    <!-- Admin Events Script -->
+    <script>
+        // Require admin authentication
+        requireAdmin();
+
+        let allEvents = [];
+        let eventModal, deleteModal;
+
+        // Initialize modals
+        document.addEventListener('DOMContentLoaded', function() {
+            eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
+            deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+
+            // Load events
+            loadEvents();
+
+            // Setup search and filter listeners
+            document.getElementById('searchInput').addEventListener('input', filterEvents);
+            document.getElementById('filterStatus').addEventListener('change', filterEvents);
+        });
+
+        // Load all events
+        async function loadEvents() {
+            try {
+                const response = await apiGet(`${API_BASE_URL}/events`);
+                allEvents = response.data || response || [];
+                displayEvents(allEvents);
+            } catch (error) {
+                console.error('Error loading events:', error);
+                document.getElementById('eventsList').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <p>Error loading events: ${error.message}</p>
+                        <button class="btn btn-primary" onclick="loadEvents()">Retry</button>
+                    </div>
+                `;
+            }
+        }
+
+        // Display events table
+        function displayEvents(events) {
+            const container = document.getElementById('eventsList');
+
+            if (events.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-calendar-alt"></i>
+                        <p>No events found</p>
+                        <button class="btn btn-primary" onclick="openAddEventModal()">
+                            <i class="fas fa-plus me-2"></i>Create Your First Event
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            const tableHtml = `
+                <div class="table-responsive-custom">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Venue</th>
+                                <th>Price</th>
+                                <th>Capacity</th>
+                                <th>Sold</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${events.map(event => `
+                                <tr>
+                                    <td><strong>${event.title}</strong></td>
+                                    <td>${event.date}</td>
+                                    <td>${event.time}</td>
+                                    <td>${event.venue}</td>
+                                    <td>$${parseFloat(event.price || 0).toFixed(2)}</td>
+                                    <td>${event.capacity}</td>
+                                    <td>${event.ticketsSold || 0}</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-primary" onclick="editEvent(${event.id})">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-danger" onclick="deleteEvent(${event.id})">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            container.innerHTML = tableHtml;
+        }
+
+        // Filter events
+        function filterEvents() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const statusFilter = document.getElementById('filterStatus').value;
+
+            const filtered = allEvents.filter(event => {
+                const matchesSearch = !searchTerm ||
+                    event.title.toLowerCase().includes(searchTerm) ||
+                    event.venue.toLowerCase().includes(searchTerm);
+
+                let matchesStatus = true;
+                if (statusFilter) {
+                    const eventDate = new Date(event.date + ' ' + event.time);
+                    const now = new Date();
+
+                    if (statusFilter === 'upcoming') {
+                        matchesStatus = eventDate > now;
+                    } else if (statusFilter === 'ongoing') {
+                        matchesStatus = eventDate <= now && eventDate.getTime() + 3600000 > now.getTime();
+                    } else if (statusFilter === 'completed') {
+                        matchesStatus = eventDate.getTime() + 3600000 <= now.getTime();
+                    }
+                }
+
+                return matchesSearch && matchesStatus;
+            });
+
+            displayEvents(filtered);
+        }
+
+        // Open add event modal
+        function openAddEventModal() {
+            document.getElementById('eventModalTitle').textContent = 'Add New Event';
+            document.getElementById('eventForm').reset();
+            document.getElementById('eventId').value = '';
+            document.getElementById('eventFormError').classList.add('d-none');
+            eventModal.show();
+        }
+
+        // Edit event
+        async function editEvent(id) {
+            const event = allEvents.find(e => e.id === id);
+            if (!event) return;
+
+            document.getElementById('eventModalTitle').textContent = 'Edit Event';
+            document.getElementById('eventId').value = event.id;
+            document.getElementById('eventTitle').value = event.title;
+            document.getElementById('eventVenue').value = event.venue;
+            document.getElementById('eventDate').value = event.date;
+            document.getElementById('eventTime').value = event.time;
+            document.getElementById('eventCapacity').value = event.capacity;
+            document.getElementById('eventPrice').value = event.price;
+            document.getElementById('eventDescription').value = event.description || '';
+            document.getElementById('eventImageUrl').value = event.imageUrl || '';
+            document.getElementById('eventFormError').classList.add('d-none');
+
+            eventModal.show();
+        }
+
+        // Save event (create or update)
+        async function saveEvent() {
+            const form = document.getElementById('eventForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const eventId = document.getElementById('eventId').value;
+            const eventData = {
+                title: document.getElementById('eventTitle').value,
+                venue: document.getElementById('eventVenue').value,
+                date: document.getElementById('eventDate').value,
+                time: document.getElementById('eventTime').value,
+                capacity: parseInt(document.getElementById('eventCapacity').value),
+                price: parseFloat(document.getElementById('eventPrice').value),
+                description: document.getElementById('eventDescription').value || null,
+                imageUrl: document.getElementById('eventImageUrl').value || null
+            };
+
+            try {
+                const saveBtn = event.target;
+                saveBtn.disabled = true;
+                saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Saving...';
+
+                if (eventId) {
+                    // Update existing event
+                    await apiPut(`${API_BASE_URL}/events/${eventId}`, eventData);
+                } else {
+                    // Create new event
+                    await apiPost(`${API_BASE_URL}/events`, eventData);
+                }
+
+                eventModal.hide();
+                await loadEvents();
+                alert('Event saved successfully!');
+            } catch (error) {
+                console.error('Error saving event:', error);
+                const errorDiv = document.getElementById('eventFormError');
+                errorDiv.textContent = error.message || 'Failed to save event';
+                errorDiv.classList.remove('d-none');
+            } finally {
+                const saveBtn = event.target;
+                saveBtn.disabled = false;
+                saveBtn.innerHTML = '<i class="fas fa-save me-2"></i>Save Event';
+            }
+        }
+
+        // Delete event
+        function deleteEvent(id) {
+            document.getElementById('deleteEventId').value = id;
+            deleteModal.show();
+        }
+
+        // Confirm delete
+        async function confirmDelete() {
+            const eventId = document.getElementById('deleteEventId').value;
+
+            try {
+                await apiDelete(`${API_BASE_URL}/events/${eventId}`);
+                deleteModal.hide();
+                await loadEvents();
+                alert('Event deleted successfully!');
+            } catch (error) {
+                console.error('Error deleting event:', error);
+                alert('Failed to delete event: ' + error.message);
+            }
+        }
+    </script>
+</body>
+
+</html>
